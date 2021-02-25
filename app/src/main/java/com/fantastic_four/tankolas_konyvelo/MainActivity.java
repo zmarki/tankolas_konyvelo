@@ -6,26 +6,32 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-public class MainActivity extends AppCompatActivity implements MainWindowFragmentCallBack, NewFillingFragment.NewFillingFragmentCallback {
+public class MainActivity extends AppCompatActivity implements FirstRunOpenScreenFragmentCallback, MainWindowFragmentCallBack, NewFillingFragment.NewFillingFragmentCallback {
 
     private FragmentTransaction fragmentTransaction;
+
+    private FirstRunOpenScreenFragment firstRunOpenScreenFragment;
     private MainWindowFragment mainWindowFragment;
     private NewFillingFragment newFillingFragment;
+    private CarRegistrationFragment carRegistrationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firstRunOpenScreenFragment = new FirstRunOpenScreenFragment();
         mainWindowFragment = new MainWindowFragment();
         newFillingFragment = new NewFillingFragment();
-        mainWindowFragment.setMainWindowFragmentListener(this::mainWindowButtonClicked);
-        newFillingFragment.setNewFillingFragemtListener(this::onOkButtonClicked);
+        carRegistrationFragment = new CarRegistrationFragment();
+        firstRunOpenScreenFragment.setFirstRunCallback(this);
+        mainWindowFragment.setMainWindowFragmentListener(this);
+        newFillingFragment.setNewFillingFragemtListener(this);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         if (1 == 1) {  //Még nincsen új autó regisztrálva
-            fragmentTransaction.replace(R.id.fragment_placeholder, new FirstRunOpenScreenFragment());
+            fragmentTransaction.replace(R.id.fragment_placeholder, firstRunOpenScreenFragment);
         } else {
             fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
         }
@@ -47,5 +53,14 @@ public class MainActivity extends AppCompatActivity implements MainWindowFragmen
         fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
         fragmentTransaction.commit();
         Toast.makeText(this, "Új adatok elmentve", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMenuPointClicked(int id) {
+        if (id == FirstRunOpenScreenFragment.REGISTER_NEW_CAR_ID) {
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_placeholder, carRegistrationFragment);
+            fragmentTransaction.commit();
+        }
     }
 }

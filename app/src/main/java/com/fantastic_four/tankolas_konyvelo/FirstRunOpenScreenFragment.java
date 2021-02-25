@@ -11,7 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+interface FirstRunOpenScreenFragmentCallback {
+    void onMenuPointClicked(int id);
+}
+
 public class FirstRunOpenScreenFragment extends Fragment implements View.OnClickListener {
+
+    public static final int REGISTER_NEW_CAR_ID = 11;
+    public static final int LOAD_DATABASE_ID = 22;
+
+    private FirstRunOpenScreenFragmentCallback firstRunOpenScreenFragmentCallback;
 
     @Nullable
     @Override
@@ -36,6 +45,14 @@ public class FirstRunOpenScreenFragment extends Fragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.img_first_run_register_new || view.getId() == R.id.text_first_run_register_new) {
+            if (firstRunOpenScreenFragmentCallback != null) {
+                firstRunOpenScreenFragmentCallback.onMenuPointClicked(REGISTER_NEW_CAR_ID);
+            }
+        }
+    }
 
+    public void setFirstRunCallback(FirstRunOpenScreenFragmentCallback firstRunOpenScreenFragmentCallback) {
+        this.firstRunOpenScreenFragmentCallback = firstRunOpenScreenFragmentCallback;
     }
 }
