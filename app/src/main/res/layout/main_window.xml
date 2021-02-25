@@ -2,12 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/darkgreen_background">
 
     <ImageView
         android:id="@+id/img_statistics_main_screen"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:tint="@color/white"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/ic_statistics_svgrepo_com"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_main_statistics" />
@@ -84,6 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="VALAMILYEN STATISZTIKA"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_upper_main_screen" />
 
@@ -92,8 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="UTOLSÓ TANKOLÁS"
+        android:textColor="@color/lightgreen"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_statistics_main_screen"
+        app:layout_constraintTop_toBottomOf="@id/img_statistics_main_screen"/>
 
     <TextView
         android:id="@+id/text_last_filling_details"
@@ -101,6 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="2020.02.12   50L   MOL kút"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_last_filling" />
 
@@ -111,6 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="ÁTLAGOS TANKOLÁS"
+        android:textColor="@color/lightgreen"
         app:layout_constraintLeft_toRightOf="@id/img_avg_filling"
         app:layout_constraintTop_toTopOf="@id/img_avg_filling" />
 
@@ -119,6 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="50L"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@id/text_avg_filling"
         app:layout_constraintTop_toBottomOf="@id/text_avg_filling" />
 
@@ -128,6 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="ÁTLAGOS TANKOLÁSI IDŐ"
+        android:textColor="@color/lightgreen"
         app:layout_constraintLeft_toRightOf="@id/img_avg_filling_time"
         app:layout_constraintTop_toTopOf="@id/img_avg_filling_time" />
 
@@ -137,6 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="50L"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@id/text_avg_filling_time"
         app:layout_constraintTop_toBottomOf="@id/text_avg_filling_time" />
 
@@ -146,6 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:text="ÁTLAGOS FOGYASZTÁS"
+        android:textColor="@color/lightgreen"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/img_avg_consumption" />
 
@@ -154,6 +166,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="7.8L/km"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="@id/text_avg_consumption"
         app:layout_constraintTop_toBottomOf="@id/text_avg_consumption" />
 
@@ -164,6 +177,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:text="ÁTLAGOS FOGYASZTÁS/KM"
+        android:textColor="@color/lightgreen"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/img_avg_km_per_filling" />
 
@@ -172,6 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="285"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toRightOf="@id/img_avg_km_per_filling"
         app:layout_constraintTop_toBottomOf="@id/text_avg_km_per_filling" />
 
@@ -181,6 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:text="Új tankolás felvitele"
+        android:textColor="@color/lightgreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -190,6 +206,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="40dp"
         android:text="Statisztikák"
+        android:textColor="@color/lightgreen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
@@ -216,6 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="AKTUÁLIS AUTÓ"
+            android:textColor="@color/lightgreen"
             app:layout_constraintBottom_toTopOf="@id/text_actual_car_details"
             app:layout_constraintLeft_toLeftOf="@id/text_actual_car_details" />
 
@@ -225,6 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="SKODA 64KW 2400KM 1500ccm"
+            android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
