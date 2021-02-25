@@ -23,7 +23,12 @@ public class MainActivity extends AppCompatActivity implements MainWindowFragmen
         newFillingFragment.setNewFillingFragemtListener(this::onOkButtonClicked);
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
+
+        if (1 == 1) {  //Még nincsen új autó regisztrálva
+            fragmentTransaction.replace(R.id.fragment_placeholder, new FirstRunOpenScreenFragment());
+        } else {
+            fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
+        }
         fragmentTransaction.commit();
     }
 
