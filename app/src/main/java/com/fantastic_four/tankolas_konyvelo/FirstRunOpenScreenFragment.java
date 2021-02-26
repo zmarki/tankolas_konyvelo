@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 interface FirstRunOpenScreenFragmentCallback {
-    void onMenuPointClicked(int id);
+    void onFirstRunScreenButtonClicked(int id);
 }
 
 public class FirstRunOpenScreenFragment extends Fragment implements View.OnClickListener {
@@ -47,7 +47,7 @@ public class FirstRunOpenScreenFragment extends Fragment implements View.OnClick
     public void onClick(View view) {
         if (view.getId() == R.id.img_first_run_register_new || view.getId() == R.id.text_first_run_register_new) {
             if (firstRunOpenScreenFragmentCallback != null) {
-                firstRunOpenScreenFragmentCallback.onMenuPointClicked(REGISTER_NEW_CAR_ID);
+                firstRunOpenScreenFragmentCallback.onFirstRunScreenButtonClicked(REGISTER_NEW_CAR_ID);
             }
         }
     }

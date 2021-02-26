@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class NewFillingFragment extends Fragment {
+interface NewFillingFragmentCallback {
+    void onNewFillingButtonClicked();
+}
 
-    interface NewFillingFragmentCallback {
-        void onOkButtonClicked();
-    }
+public class NewFillingFragment extends Fragment {
 
     private NewFillingFragmentCallback newFillingFragmentCallback;
 
@@ -38,7 +38,7 @@ public class NewFillingFragment extends Fragment {
             public void onClick(View view) {
                 //SQL műveletek ide jönnek
                 if (newFillingFragmentCallback != null) {
-                    newFillingFragmentCallback.onOkButtonClicked();
+                    newFillingFragmentCallback.onNewFillingButtonClicked();
                 }
             }
         });
@@ -54,7 +54,7 @@ public class NewFillingFragment extends Fragment {
         stationTypeSpinner.setAdapter(stationTypeSpinnerAdapter);
     }
 
-    public void setNewFillingFragemtListener(NewFillingFragmentCallback newFillingFragmentCallback) {
+    public void setNewFillingFragmentListener(NewFillingFragmentCallback newFillingFragmentCallback) {
         this.newFillingFragmentCallback = newFillingFragmentCallback;
     }
 }

@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 interface MainWindowFragmentCallBack {
-    void mainWindowButtonClicked(int buttonCode);
+    void onMainWindowButtonClicked(int buttonCode);
 }
 
 public class MainWindowFragment extends Fragment implements View.OnClickListener {
@@ -45,7 +45,7 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         if (view.getId() == R.id.img_add_new_filling || view.getId() == R.id.text_add_new_filling) {
             if (mainWindowFragmentCallBack != null) {
-                mainWindowFragmentCallBack.mainWindowButtonClicked(ADD_NEW_FILLING_BTNCODE);
+                mainWindowFragmentCallBack.onMainWindowButtonClicked(ADD_NEW_FILLING_BTNCODE);
             }
         }
     }
