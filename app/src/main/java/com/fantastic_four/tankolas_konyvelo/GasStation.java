@@ -1,4 +1,4 @@
-package Data;
+package  com.fantastic_four.tankolas_konyvelo;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
