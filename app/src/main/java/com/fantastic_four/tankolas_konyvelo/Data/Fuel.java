@@ -1,4 +1,4 @@
-package  com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.Data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -17,7 +17,7 @@ public class Fuel {
     @PrimaryKey (autoGenerate = true)
     public int id;
 
-    @ColumnInfo ( name = "Üzemanyag")
+    @ColumnInfo
     public String FuelName;
 
     public int GSid;
