@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements FirstRunOpenScree
     }
 
 
-
     @Override
     public void onMainWindowButtonClicked(int buttonCode) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
