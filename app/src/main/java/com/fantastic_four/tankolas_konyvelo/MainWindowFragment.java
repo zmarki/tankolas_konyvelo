@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -35,6 +39,15 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         TextView addNewFillingText = view.findViewById(R.id.text_add_new_filling);
         addNewFillingText.setOnClickListener(this);
         addNewFillingImg.setOnClickListener(this);
+
+        GraphView graphView = view.findViewById(R.id.graph_main_screen);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(1, 3),
+                new DataPoint(3, 5),
+                new DataPoint(8, 9),
+        });
+        graphView.addSeries(series);
     }
 
     public void setMainWindowFragmentListener(MainWindowFragmentCallBack mainWindowFragmentCallBack) {
