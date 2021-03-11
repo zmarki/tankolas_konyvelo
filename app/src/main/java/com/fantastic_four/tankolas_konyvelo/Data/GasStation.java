@@ -10,9 +10,24 @@ import androidx.room.PrimaryKey;
 @Entity
 public class GasStation {
 
-    @PrimaryKey (autoGenerate = true)
-    public int id;
+    @PrimaryKey
+    public int gasStationId;
 
-    @ColumnInfo(name = "Benzinkút")
     public String name;
+
+    public int getId() {
+        return gasStationId;
+    }
+
+    public void setId(int id) {
+        this.gasStationId = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

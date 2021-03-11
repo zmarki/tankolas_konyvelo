@@ -12,7 +12,7 @@ public class PersonalChalk {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public int mileage;
+   /* public int mileage;
 
     public int liter;
 
@@ -20,5 +20,5 @@ public class PersonalChalk {
 
     public int fuelId;
 
-    public Date date;
+    public Date date;*/
 }
