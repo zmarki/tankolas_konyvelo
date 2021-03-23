@@ -1,6 +1,5 @@
 package com.fantastic_four.tankolas_konyvelo.Data;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,6 +13,11 @@ public class GasStation {
     public int gasStationId;
 
     public String name;
+
+    public GasStation(int gasStationId, String name) {
+        this.gasStationId = gasStationId;
+        this.name = name;
+    }
 
     public int getId() {
         return gasStationId;

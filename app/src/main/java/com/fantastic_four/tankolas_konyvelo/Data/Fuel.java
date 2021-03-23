@@ -18,9 +18,15 @@ public class Fuel {
     public int id;
 
     @ColumnInfo
-    public String FuelName;
+    public String fuelName;
 
     public int GSid;
+
+    public Fuel(int id, String fuelName, int GSid) {
+        this.id = id;
+        this.fuelName = fuelName;
+        this.GSid = GSid;
+    }
 
     public int getId() {
         return id;
@@ -31,11 +37,11 @@ public class Fuel {
     }
 
     public String getFuelName() {
-        return FuelName;
+        return fuelName;
     }
 
     public void setFuelName(String fuelName) {
-        FuelName = fuelName;
+        fuelName = fuelName;
     }
 
     public int getGSid() {

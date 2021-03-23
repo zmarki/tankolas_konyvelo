@@ -1,115 +1,115 @@
 [
   {
-    "ID": 1,
-    "FuelType": "MaxxMotion 95",
+    "id": 1,
+    "fuelName": "MaxxMotion 95",
     "GSid": 3
   },
 
   {
-    "ID": 2,
-    "FuelType": "MaxxMotion 100",
+    "id": 2,
+    "fuelName": "MaxxMotion 100",
     "GSid": 3
   },
 
   {
-    "ID": 3,
-    "FuelType": "MaxxMotion Diesel",
+    "id": 3,
+    "fuelName": "MaxxMotion Diesel",
     "GSid": 3
   },
 
   {
-    "ID": 4,
-    "FuelType": "95",
-    "GSid": null
+    "id": 4,
+    "fuelName": "95",
+    "GSid": 6
   },
 
   {
-    "ID": 5,
-    "FuelType": "Diesel",
-    "GSid": null
+    "id": 5,
+    "fuelName": "Diesel",
+    "GSid": 6
   },
 
   {
-    "ID": 6,
-    "FuelType": "LPG",
-    "GSid": null
+    "id": 6,
+    "fuelName": "LPG",
+    "GSid": 6
   },
 
   {
-    "ID": 7,
-    "FuelType": "V-Power 95",
+    "id": 7,
+    "fuelName": "V-Power 95",
     "GSid": 1
   },
 
   {
-    "ID": 8,
-    "FuelType": "V-Power 100",
+    "id": 8,
+    "fuelName": "V-Power 100",
     "GSid": 1
   },
 
   {
-    "ID": 9,
-    "FuelType": "V-Power Diesel",
+    "id": 9,
+    "fuelName": "V-Power Diesel",
     "GSid": 1
   },
 
   {
-    "ID": 10,
-    "FuelType": "EVO 95",
+    "id": 10,
+    "fuelName": "EVO 95",
     "GSid": 2
   },
 
   {
-    "ID": 11,
-    "FuelType": "EVO Plus 100",
+    "id": 11,
+    "fuelName": "EVO Plus 100",
     "GSid": 2
   },
 
   {
-    "ID": 12,
-    "FuelType": "EVO Plus Diesel",
+    "id": 12,
+    "fuelName": "EVO Plus Diesel",
     "GSid": 2
   },
 
   {
-    "ID": 13,
-    "FuelType": "Silver 95",
+    "id": 13,
+    "fuelName": "Silver 95",
     "GSid": 4
   },
 
   {
-    "ID": 14,
-    "FuelType": "Gold 100",
+    "id": 14,
+    "fuelName": "Gold 100",
     "GSid": 4
   },
 
   {
-    "ID": 15,
-    "FuelType": "Gold Diesel",
+    "id": 15,
+    "fuelName": "Gold Diesel",
     "GSid": 4
   },
 
   {
-    "ID": 16,
-    "FuelType": "Top 95",
+    "id": 16,
+    "fuelName": "Top 95",
     "GSid": 5
   },
 
   {
-    "ID": 17,
-    "FuelType": "Top Extra 100",
+    "id": 17,
+    "fuelName": "Top Extra 100",
     "GSid": 5
   },
 
   {
-    "ID": 18,
-    "FuelType": "Top Extra Diesel",
+    "id": 18,
+    "fuelName": "Top Extra Diesel",
     "GSid": 5
   },
 
   {
-    "ID": 19,
-    "FuelType": "100",
-    "GSid": null
+    "id": 19,
+    "fuelName": "100",
+    "GSid": 6
   }
 ]

@@ -1,31 +1,31 @@
 [
   {
-    "ID": 1,
+    "gasStationId": 1,
     "name": "Shell"
   },
 
   {
-    "ID": 2,
+    "gasStationId": 2,
     "name": "Mol"
   },
 
   {
-    "ID": 3,
+    "gasStationId": 3,
     "name": "OMW"
   },
 
   {
-    "ID": 4,
+    "gasStationId": 4,
     "name": "Avia"
   },
 
   {
-    "ID": 5,
+    "gasStationId": 5,
     "name": "LukOil"
   },
 
   {
-    "ID": 6,
+    "gasStationId": 6,
     "name": "Other"
   }
 ]
