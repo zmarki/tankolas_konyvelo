@@ -11,14 +11,11 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-interface NewFillingFragmentCallback {
-    void onNewFillingButtonClicked();
-}
+import androidx.lifecycle.ViewModelProvider;
 
 public class NewFillingFragment extends Fragment {
 
-    private NewFillingFragmentCallback newFillingFragmentCallback;
+    private MainViewModel mainViewModel;
 
     @Nullable
     @Override
@@ -30,6 +27,8 @@ public class NewFillingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
         Spinner fuelTypeSpinner = view.findViewById(R.id.text_new_filling_fuel_type_spinner);
         Spinner stationTypeSpinner = view.findViewById(R.id.text_new_filling_station_type_spinner);
         Button okButton = view.findViewById(R.id.new_filling_OK_btn);
@@ -37,9 +36,7 @@ public class NewFillingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //SQL műveletek ide jönnek
-                if (newFillingFragmentCallback != null) {
-                    newFillingFragmentCallback.onNewFillingButtonClicked();
-                }
+                mainViewModel.setClickedButtonId(MainActivity.MAINWINDOWFRAGMENT_ID);
             }
         });
 
@@ -52,9 +49,5 @@ public class NewFillingFragment extends Fragment {
 
         ArrayAdapter<String> stationTypeSpinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, stationTypes);
         stationTypeSpinner.setAdapter(stationTypeSpinnerAdapter);
-    }
-
-    public void setNewFillingFragmentListener(NewFillingFragmentCallback newFillingFragmentCallback) {
-        this.newFillingFragmentCallback = newFillingFragmentCallback;
     }
 }

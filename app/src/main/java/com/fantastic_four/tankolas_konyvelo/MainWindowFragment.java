@@ -14,14 +14,11 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-interface MainWindowFragmentCallBack {
-    void onMainWindowButtonClicked(int buttonCode);
-}
+import androidx.lifecycle.ViewModelProvider;
 
 public class MainWindowFragment extends Fragment implements View.OnClickListener {
 
-    private MainWindowFragmentCallBack mainWindowFragmentCallBack;
+    private MainViewModel mainViewModel;
 
     public static final int ADD_NEW_FILLING_BTNCODE = 111;
     public static final int CHECK_STATISTICS_BTNCODE = 222;
@@ -35,6 +32,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
         ImageView addNewFillingImg = view.findViewById(R.id.img_add_new_filling);
         TextView addNewFillingText = view.findViewById(R.id.text_add_new_filling);
         addNewFillingText.setOnClickListener(this);
@@ -50,16 +50,10 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         graphView.addSeries(series);
     }
 
-    public void setMainWindowFragmentListener(MainWindowFragmentCallBack mainWindowFragmentCallBack) {
-        this.mainWindowFragmentCallBack = mainWindowFragmentCallBack;
-    }
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.img_add_new_filling || view.getId() == R.id.text_add_new_filling) {
-            if (mainWindowFragmentCallBack != null) {
-                mainWindowFragmentCallBack.onMainWindowButtonClicked(ADD_NEW_FILLING_BTNCODE);
-            }
+            mainViewModel.setClickedButtonId(MainActivity.NEWFILLINGFRAGMENT_ID);
         }
     }
 }

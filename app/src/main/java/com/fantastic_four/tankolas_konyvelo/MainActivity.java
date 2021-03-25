@@ -11,17 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-public class MainActivity extends AppCompatActivity implements FirstRunOpenScreenFragmentCallback, MainWindowFragmentCallBack, NewFillingFragmentCallback, CarRegistrationFragmentCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MainViewModel mainViewModel;
 
     private DrawerLayout drawerLayout;
     private FragmentTransaction fragmentTransaction;
 
-    private FirstRunOpenScreenFragment firstRunOpenScreenFragment;
-    private MainWindowFragment mainWindowFragment;
-    private NewFillingFragment newFillingFragment;
-    private CarRegistrationFragment carRegistrationFragment;
+    public static final int FIRSTRUNFRAGMENT_ID = 100;
+    public static final int MAINWINDOWFRAGMENT_ID = 101;
+    public static final int NEWFILLINGFRAGMENT_ID = 102;
+    public static final int CARREGISTRATIONFRAGMENT_ID = 103;
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -44,69 +48,48 @@ public class MainActivity extends AppCompatActivity implements FirstRunOpenScree
         NavigationView navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        firstRunOpenScreenFragment = new FirstRunOpenScreenFragment();
-        mainWindowFragment = new MainWindowFragment();
-        newFillingFragment = new NewFillingFragment();
-        carRegistrationFragment = new CarRegistrationFragment();
-        firstRunOpenScreenFragment.setFirstRunCallback(this);
-        mainWindowFragment.setMainWindowFragmentListener(this);
-        newFillingFragment.setNewFillingFragmentListener(this);
-        carRegistrationFragment.setCarRegistrationFragmentListener(this);
-
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
         if (1 == 1) {  //Még nincsen új autó regisztrálva
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            fragmentTransaction.replace(R.id.fragment_placeholder, firstRunOpenScreenFragment);
+            changeFragment(FIRSTRUNFRAGMENT_ID);
         } else {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24px);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
+           changeFragment(MAINWINDOWFRAGMENT_ID);
         }
-        fragmentTransaction.commit();
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.getClickedButton().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer buttonId) {
+                changeFragment(buttonId);
+            }
+        });
     }
 
-
-    @Override
-    public void onMainWindowButtonClicked(int buttonCode) {
+    private void changeFragment(int fragment_id) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        if (buttonCode == MainWindowFragment.ADD_NEW_FILLING_BTNCODE) {
-            fragmentTransaction.replace(R.id.fragment_placeholder, newFillingFragment);
-            fragmentTransaction.commit();
+        switch (fragment_id) {
+            case FIRSTRUNFRAGMENT_ID:
+                fragmentTransaction.replace(R.id.fragment_placeholder, new FirstRunOpenScreenFragment());
+                break;
+            case MAINWINDOWFRAGMENT_ID:
+                getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24px);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                fragmentTransaction.replace(R.id.fragment_placeholder, new MainWindowFragment());
+                break;
+            case NEWFILLINGFRAGMENT_ID:
+                fragmentTransaction.replace(R.id.fragment_placeholder, new NewFillingFragment());
+                break;
+            case CARREGISTRATIONFRAGMENT_ID:
+                fragmentTransaction.replace(R.id.fragment_placeholder, new CarRegistrationFragment());
+                break;
         }
-    }
-
-    @Override
-    public void onNewFillingButtonClicked() {
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
-        fragmentTransaction.commit();
-        Toast.makeText(this, "Új adatok elmentve", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onFirstRunScreenButtonClicked(int id) {
-        if (id == FirstRunOpenScreenFragment.REGISTER_NEW_CAR_ID) {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24px);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_placeholder, carRegistrationFragment);
-            fragmentTransaction.commit();
-        }
-    }
-
-    @Override
-    public void onCarRegistrationButtonClicked() {
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_placeholder, mainWindowFragment);
         fragmentTransaction.commit();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.drawer_menu_open:
                 Toast.makeText(this, "Megnyitás", Toast.LENGTH_SHORT).show();
                 break;
