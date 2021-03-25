@@ -1,0 +1,115 @@
+[
+  {
+    "id": 1,
+    "fuelName": "MaxxMotion 95",
+    "GSid": 3
+  },
+
+  {
+    "id": 2,
+    "fuelName": "MaxxMotion 100",
+    "GSid": 3
+  },
+
+  {
+    "id": 3,
+    "fuelName": "MaxxMotion Diesel",
+    "GSid": 3
+  },
+
+  {
+    "id": 4,
+    "fuelName": "95",
+    "GSid": 6
+  },
+
+  {
+    "id": 5,
+    "fuelName": "Diesel",
+    "GSid": 6
+  },
+
+  {
+    "id": 6,
+    "fuelName": "LPG",
+    "GSid": 6
+  },
+
+  {
+    "id": 7,
+    "fuelName": "V-Power 95",
+    "GSid": 1
+  },
+
+  {
+    "id": 8,
+    "fuelName": "V-Power 100",
+    "GSid": 1
+  },
+
+  {
+    "id": 9,
+    "fuelName": "V-Power Diesel",
+    "GSid": 1
+  },
+
+  {
+    "id": 10,
+    "fuelName": "EVO 95",
+    "GSid": 2
+  },
+
+  {
+    "id": 11,
+    "fuelName": "EVO Plus 100",
+    "GSid": 2
+  },
+
+  {
+    "id": 12,
+    "fuelName": "EVO Plus Diesel",
+    "GSid": 2
+  },
+
+  {
+    "id": 13,
+    "fuelName": "Silver 95",
+    "GSid": 4
+  },
+
+  {
+    "id": 14,
+    "fuelName": "Gold 100",
+    "GSid": 4
+  },
+
+  {
+    "id": 15,
+    "fuelName": "Gold Diesel",
+    "GSid": 4
+  },
+
+  {
+    "id": 16,
+    "fuelName": "Top 95",
+    "GSid": 5
+  },
+
+  {
+    "id": 17,
+    "fuelName": "Top Extra 100",
+    "GSid": 5
+  },
+
+  {
+    "id": 18,
+    "fuelName": "Top Extra Diesel",
+    "GSid": 5
+  },
+
+  {
+    "id": 19,
+    "fuelName": "100",
+    "GSid": 6
+  }
+]
