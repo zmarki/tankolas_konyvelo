@@ -26,6 +26,7 @@ public class CarRepository {
     }
 
     public void deleteCar(Car car) {
+        deleteCarAsync(car);
 
     }
 
@@ -45,6 +46,20 @@ public class CarRepository {
                     insertResult.postValue(1);
                 } catch (Exception e) {
                     insertResult.postValue(0);
+                }
+            }
+        }).start();
+    }
+
+    private void deleteCarAsync(final Car car) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    carDao.deleteCar(car);
+                } catch (Exception e) {
+
                 }
             }
         }).start();

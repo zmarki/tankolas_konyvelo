@@ -41,7 +41,7 @@ public class Fuel {
     }
 
     public void setFuelName(String fuelName) {
-        fuelName = fuelName;
+        this.fuelName = fuelName;
     }
 
     public int getGSid() {

@@ -19,12 +19,5 @@ public interface FuelDao {
     @Query("SELECT * FROM Fuel")
     LiveData<List<Fuel>> getAllFuel();
 
-   /* @Query("SELECT 'FuelName' FROM Fuel WHERE GSid = :GSID")
-    List<Fuel> findGS(int GSID);*/
-
-    /*//1-n kapcsolat lekérdezés
-    @Transaction
-    @Query("SELECT * FROM GasStation WHERE gasStationId = :gasStationId")
-    List<GasStationWithFuel> getGasStationWithFuel(int gasStationId);*/
 
 }

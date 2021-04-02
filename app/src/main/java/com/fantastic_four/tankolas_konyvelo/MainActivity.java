@@ -37,24 +37,8 @@ public class MainActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btn);
         button.setOnClickListener(view -> Toast.makeText(MainActivity.this, "Gomb megnyomva", Toast.LENGTH_LONG).show());
 
-        /*OneTimeWorkRequest first = new OneTimeWorkRequest.Builder(FirstWorker.class).build();
-        OneTimeWorkRequest second = new OneTimeWorkRequest.Builder(SecondWorker.class).build();
-
-        WorkManager.getInstance()
-                .beginWith(first)
-                .then(second)
-                .enqueue();*/
-
-
-
-
         carViewModel = ViewModelProviders.of(this).get(CarViewModel.class);
         personalChalkViewModel = ViewModelProviders.of(this).get(PersonalChalkViewModel.class);
-
-
-
-
-
 
 
         Car car = new Car("EDK579", "Toyota", "Prius", 1600, 80, "benzin", 478747);
@@ -77,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ;
         personalChalk.fuelId = 1;
         personalChalk.liter = 15;
         personalChalk.mileage = 150;
