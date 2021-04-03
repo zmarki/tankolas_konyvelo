@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkgreen_background">
+
+    <Button
+        android:id="@+id/new_filling_OK_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/middlegreen"
+        android:text="OK"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/text_new_filling_KM_edittext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        android:inputType="numberDecimal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_KM" />
+
+    <EditText
+        android:id="@+id/text_new_filling_fuel_price_edittext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_price" />
+
+    <EditText
+        android:id="@+id/text_new_filling_fuel_amount_edittext"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_amount" />
+
+    <EditText
+        android:id="@+id/text_new_filling_fuel_date_datepicker"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        android:inputType="datetime"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_date" />
+
+    <Spinner
+        android:id="@+id/text_new_filling_fuel_type_spinner"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_type" />
+
+    <Spinner
+        android:id="@+id/text_new_filling_station_type_spinner"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:background="@color/gray1"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_station_type" />
+
+    <TextView
+        android:id="@+id/text_new_filling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Kérlek, add meg az új adatokat"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_new_filling_KM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:text="KM óraállás"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling" />
+
+    <TextView
+        android:id="@+id/text_new_filling_fuel_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Üzemanyag típusa"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_KM_edittext" />
+
+    <TextView
+        android:id="@+id/text_new_filling_fuel_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Üzemanyag ára (Ft/L)"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_type_spinner" />
+
+    <TextView
+        android:id="@+id/text_new_filling_fuel_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Üzemanyag mennyisége (L)"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_price_edittext" />
+
+    <TextView
+        android:id="@+id/text_new_filling_station_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Kút típusa"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_fuel_amount_edittext" />
+
+    <TextView
+        android:id="@+id/text_new_filling_fuel_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Tankolás dátuma"
+        android:textColor="@color/lightgreen"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_new_filling_station_type_spinner" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
