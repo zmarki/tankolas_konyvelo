@@ -13,7 +13,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import android.widget.Button;
 
+import com.fantastic_four.tankolas_konyvelo.Data.Car;
+import com.fantastic_four.tankolas_konyvelo.Data.Converters;
+import com.fantastic_four.tankolas_konyvelo.Data.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
+import com.fantastic_four.tankolas_konyvelo.ViewModel.PersonalChalkViewModel;
+import com.fantastic_four.tankolas_konyvelo.Workers.WorkManager;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.room.TypeConverters;
+
+@SuppressWarnings("ALL")
+@TypeConverters(Converters.class)
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private MainViewModel mainViewModel;
@@ -25,6 +42,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int MAINWINDOWFRAGMENT_ID = 101;
     public static final int NEWFILLINGFRAGMENT_ID = 102;
     public static final int CARREGISTRATIONFRAGMENT_ID = 103;
+  
+  private CarViewModel carViewModel;
+    private PersonalChalkViewModel personalChalkViewModel;
+    private WorkManager workManager = new WorkManager();
+    // private GasStationRepository gasStationRepository;
+    //private FuelRepository fuelRepository;
 
 
     @Override
@@ -38,11 +61,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         return super.onOptionsItemSelected(item);
     }
+   
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+      setContentView(R.layout.activity_main);
+      
+        carViewModel = ViewModelProviders.of(this).get(CarViewModel.class);
+        personalChalkViewModel = ViewModelProviders.of(this).get(PersonalChalkViewModel.class);
+
+
+        Car car = new Car("EDK579", "Toyota", "Prius", 1600, 80, "benzin", 478747);
+
+       /* carViewModel.getInsertResult().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer result) {
+                if (result==1) {
+                    Toast.makeText(MainActivity.this, "Car Successfully save", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+        PersonalChalk personalChalk;
+
+        personalChalk = new PersonalChalk();
+        try {
+            personalChalk.date = sdf.parse("2021-05-03");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        personalChalk.fuelId = 1;
+        personalChalk.liter = 15;
+        personalChalk.mileage = 150;
+        personalChalk.price = 415;
+
+
+        carViewModel.insertCar(car);
+        personalChalkViewModel.insertPersonalChalk(personalChalk);
+      
+      
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
