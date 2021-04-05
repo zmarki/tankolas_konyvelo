@@ -13,7 +13,8 @@
             android:name=".MainActivity"
             android:icon="@drawable/ic_menu_24px"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

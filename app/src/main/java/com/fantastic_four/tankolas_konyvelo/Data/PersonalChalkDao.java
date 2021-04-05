@@ -2,6 +2,7 @@ package com.fantastic_four.tankolas_konyvelo.Data;
 
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
+import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 
 import java.util.List;
 
@@ -26,23 +27,33 @@ public interface PersonalChalkDao {
     @Query("DELETE FROM personalchalk")
     void deleteALL();
 
+    //Utolsó tankolás adatai
+    @Query("select date, price, liter, fuelName, g.name as GSName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid=g.gasStationId ORDER BY date LIMIT 1")
+    LiveData<LastFive> lastChalk();
+
     //Átlagpsan tankolt mennyiség
-    @Query("SELECT AVG(liter) FROM PersonalChalk")
-    LiveData<Integer> avgLiter();
+    @Query("SELECT AVG(liter) as avgLiter FROM PersonalChalk")
+    LiveData<Float> avgLiter();
 
     //Átlag fogyasztás:
-    @Query("SELECT SUM(liter)/((MAX(mileage)-MIN(mileage))/100) FROM PersonalChalk")
+    @Query("SELECT SUM(liter)/((MAX(mileage)-MIN(mileage))/100) as avgCons FROM PersonalChalk")
     LiveData<Double> avgConsumption();
+
+    //Összes adat lekérése:
+    @Query("SELECT * from PersonalChalk")
+    LiveData<List<PersonalChalk>> getAllPersonalChalks();
 
 
     //Átlag tankolási idököz
-
+    @Query("SELECT (julianday(max(date)) - julianday(min(date))) / count(*) as avgfilling from PersonalChalk")
+    LiveData<Double> avgFillingDuration();
 
     //Átlag km/tankolás:
-
+    @Query("SELECT (max(mileage) - min(mileage)) / count(*)  as avgfilling from PersonalChalk")
+    LiveData<Double> avgFillingKM();
 
     //Utolsó 5 tankolás adatai
-    @Query("SELECT date, liter, price FROM PersonalChalk ORDER BY date LIMIT 5")
+    @Query("SELECT date, liter, price FROM PersonalChalk ORDER BY date asc LIMIT 5")
     LiveData<List<LastFive>> lastFiveChalk();
 
     //Hány tankolás volt havonta
@@ -56,7 +67,6 @@ public interface PersonalChalkDao {
     LiveData<List<CountSumMonth>> sumLiterMonthChalk();
 
     //egy Tankolással hány Km lett megtéve
-
 
 
 }

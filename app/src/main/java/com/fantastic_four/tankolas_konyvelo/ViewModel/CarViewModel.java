@@ -2,7 +2,7 @@ package com.fantastic_four.tankolas_konyvelo.ViewModel;
 
 import android.app.Application;
 
-import com.fantastic_four.tankolas_konyvelo.Data.Car;
+import com.fantastic_four.tankolas_konyvelo.Car;
 import com.fantastic_four.tankolas_konyvelo.Data.CarRepository;
 
 import java.util.List;
@@ -38,5 +38,13 @@ public class CarViewModel extends AndroidViewModel {
 
     public LiveData<List<Car>> getAllCars() {
         return allCars;
+    }
+
+    public LiveData<Integer> getCarCount(){
+        return carRepository.getCarCount();
+    }
+
+    public void deleteAllCars(){
+        carRepository.deleteAllCars();
     }
 }

@@ -1,4 +1,7 @@
-package com.fantastic_four.tankolas_konyvelo.Data;
+package com.fantastic_four.tankolas_konyvelo;
+
+import com.fantastic_four.tankolas_konyvelo.Data.Converters;
+import com.fantastic_four.tankolas_konyvelo.Data.Fuel;
 
 import java.util.Date;
 
@@ -9,9 +12,9 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Fuel.class,
-parentColumns = "id",
-childColumns = "fuelId",
-onDelete = ForeignKey.CASCADE)}/*, {@ForeignKey()}*/)
+        parentColumns = "id",
+        childColumns = "fuelId",
+        onDelete = ForeignKey.CASCADE)}/*, {@ForeignKey()}*/)
 
 public class PersonalChalk {
 
@@ -35,13 +38,17 @@ public class PersonalChalk {
     @TypeConverters({Converters.class})
     public Date date;
 
-   /* public PersonalChalk(int mileage, int liter, int price, int fuelId, java.sql.Date date) {
+    public PersonalChalk() {
+
+    }
+
+    public PersonalChalk(int mileage, int liter, int price, int fuelId, Date date) {
         this.mileage = mileage;
         this.liter = liter;
         this.price = price;
         this.fuelId = fuelId;
         this.date = date;
-    }*/
+    }
 
     public int getId() {
         return id;

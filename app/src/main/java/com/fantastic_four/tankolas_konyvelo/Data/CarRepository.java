@@ -2,6 +2,8 @@ package com.fantastic_four.tankolas_konyvelo.Data;
 
 import android.content.Context;
 
+import com.fantastic_four.tankolas_konyvelo.Car;
+
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
@@ -12,6 +14,7 @@ public class CarRepository {
 
     private MutableLiveData<Integer> insertResult = new MutableLiveData<>();
     private LiveData<List<Car>> allCars;
+    private LiveData<Integer> carCount = new MutableLiveData<>();
 
     public CarRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
@@ -35,6 +38,18 @@ public class CarRepository {
         return allCars;
     }
 
+    public void deleteAllCars() {
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                carDao.deleteAllCars();
+            }
+        });
+    }
+
+    public LiveData<Integer> getCarCount() {
+        return carDao.getCarCount();
+    }
 
     // Beilleszti a táblázatba az adatokat egy külön szálon a háttérben, és az insertResult-ba rögziti hogy sikeres volt-e.
     private void insertCarAsync(final Car car) {

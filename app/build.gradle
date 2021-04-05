@@ -4,8 +4,9 @@ plugins {
 
 android {
     compileSdkVersion 29
+
     buildFeatures {
-        dataBinding = true
+        dataBinding true
     }
 
     defaultConfig {
