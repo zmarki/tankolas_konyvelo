@@ -1,4 +1,4 @@
-package com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,14 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fantastic_four.tankolas_konyvelo.Car;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
+import com.fantastic_four.tankolas_konyvelo.MainActivity;
+import com.fantastic_four.tankolas_konyvelo.R;
+import com.fantastic_four.tankolas_konyvelo.View.MainViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -22,17 +25,12 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class MainWindowFragment extends Fragment implements View.OnClickListener {
-
-   /* nyitóképernyőre korábbi tankolások adatai(pl a legutóbbi 5 tankolás) -> adatpárok: tankolás ideje - tankolás mennyisége - tankolás ára
-    tankolások száma havonta -> adatpárok: hónap - tankolások (bejegyzések - count) száma
-    hány liter üzemanyag lett tankolva havonta -> adatpárok: hónap - tankolt benzin mennyisége (sum)
-    egy tankolással hány km lett megtéve -> adatpárok: tankolás dátuma - ez utáni és az adott tankoláskori km óraállás különbsége (kivéve legutolsó tankolás)
-*/
 
     private MainViewModel mainViewModel;
     private CarViewModel carViewModel;
@@ -48,9 +46,6 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     private TextView avgConsumptionTextView;
     private TextView avgFillingKMTextView;
     private TextView avgFillingDurationTextView;
-
-    public static final int ADD_NEW_FILLING_BTNCODE = 111;
-    public static final int CHECK_STATISTICS_BTNCODE = 222;
 
     @Nullable
     @Override
@@ -83,8 +78,12 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
 
         ImageView addNewFillingImg = view.findViewById(R.id.img_add_new_filling);
         TextView addNewFillingText = view.findViewById(R.id.text_add_new_filling);
+        ImageView statisticsImg = view.findViewById(R.id.img_check_statistics);
+        TextView statisticsText = view.findViewById(R.id.text_check_statistics);
         addNewFillingText.setOnClickListener(this);
         addNewFillingImg.setOnClickListener(this);
+        statisticsText.setOnClickListener(this);
+        statisticsImg.setOnClickListener(this);
 
         graphView = view.findViewById(R.id.graph_main_screen);
     }
@@ -153,12 +152,12 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
             series.setColor(getActivity().getColor(R.color.lightgreen));
             graphView.addSeries(series);
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-            graphView.getGridLabelRenderer().setGridColor(R.color.white);
-            graphView.getGridLabelRenderer().setHorizontalLabelsColor(R.color.white);
-            graphView.getGridLabelRenderer().setVerticalLabelsColor(R.color.white);
+            graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.white));
+            graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+            graphView.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
             graphView.getViewport().setMinY(0);
             graphView.getViewport().setMinX(lastFives.get(0).getDate().getTime());
-            graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime() + 3000);
+            graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime());
         }
     };
 
@@ -166,6 +165,8 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         if (view.getId() == R.id.img_add_new_filling || view.getId() == R.id.text_add_new_filling) {
             mainViewModel.setClickedButtonId(MainActivity.NEWFILLINGFRAGMENT_ID);
+        } else if (view.getId() == R.id.img_check_statistics || view.getId() == R.id.text_check_statistics) {
+            mainViewModel.setClickedButtonId(MainActivity.STATISTICSFRAGMENT_ID);
         }
     }
 }

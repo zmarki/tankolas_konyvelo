@@ -1,5 +1,7 @@
 package com.fantastic_four.tankolas_konyvelo;
 
+import com.fantastic_four.tankolas_konyvelo.Data.ServerResponse;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

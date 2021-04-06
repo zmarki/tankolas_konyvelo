@@ -3,7 +3,7 @@ package com.fantastic_four.tankolas_konyvelo.ViewModel;
 import android.app.Application;
 
 import com.fantastic_four.tankolas_konyvelo.RetrofitRepository;
-import com.fantastic_four.tankolas_konyvelo.ServerResponse;
+import com.fantastic_four.tankolas_konyvelo.Data.ServerResponse;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

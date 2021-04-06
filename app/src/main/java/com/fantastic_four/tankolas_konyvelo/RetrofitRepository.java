@@ -1,5 +1,7 @@
 package com.fantastic_four.tankolas_konyvelo;
 
+import com.fantastic_four.tankolas_konyvelo.Data.ServerResponse;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;

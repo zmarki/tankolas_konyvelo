@@ -1,4 +1,4 @@
-package com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.View;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
+import com.fantastic_four.tankolas_konyvelo.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

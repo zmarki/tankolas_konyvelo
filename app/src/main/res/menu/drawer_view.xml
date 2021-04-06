@@ -3,7 +3,8 @@
     <group>
         <item
             android:id="@+id/drawer_menu_prev_data"
-            android:icon="@drawable/ic_folder_open_24px"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:iconTint="@color/black"
             android:title="Eddigi bevitt adatok" />
 
     </group>

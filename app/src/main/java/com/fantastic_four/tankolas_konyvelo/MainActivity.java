@@ -9,6 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fantastic_four.tankolas_konyvelo.Data.Converters;
+import com.fantastic_four.tankolas_konyvelo.Data.ServerResponse;
+import com.fantastic_four.tankolas_konyvelo.View.CarRegistrationFragment;
+import com.fantastic_four.tankolas_konyvelo.View.FirstRunOpenScreenFragment;
+import com.fantastic_four.tankolas_konyvelo.View.MainViewModel;
+import com.fantastic_four.tankolas_konyvelo.View.MainWindowFragment;
+import com.fantastic_four.tankolas_konyvelo.View.NewFillingFragment;
+import com.fantastic_four.tankolas_konyvelo.View.PrevDataFragment;
+import com.fantastic_four.tankolas_konyvelo.View.StatisticsFragment;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.PersonalChalkViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.RetrofitViewModel;
@@ -43,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int NEWFILLINGFRAGMENT_ID = 102;
     public static final int CARREGISTRATIONFRAGMENT_ID = 103;
     public static final int LOADDATA_ID = 104;
-    public static final int PREVDATAFRAGMENT_ID = 104;
+    public static final int PREVDATAFRAGMENT_ID = 105;
+    public static final int STATISTICSFRAGMENT_ID = 106;
     boolean isMainWindow = false;
 
     private CarViewModel carViewModel;
@@ -143,6 +152,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case PREVDATAFRAGMENT_ID:
                 fragmentTransaction.replace(R.id.fragment_placeholder, new PrevDataFragment());
                 break;
+            case STATISTICSFRAGMENT_ID:
+                fragmentTransaction.replace(R.id.fragment_placeholder, new StatisticsFragment());
+                break;
         }
         fragmentTransaction.commit();
     }
@@ -196,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.setMessage("Add meg a rendszámot:");
         dialog.setView(editText);
         dialog.setNegativeButton("Mégse", null);
-        dialog.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (editText.getText().toString().length() > 3) {
@@ -225,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.setTitle("Megerősítés");
                 dialog.setMessage("Biztos, hogy mentsük? Minden korábbi mentés törlődik a szerveren.");
                 dialog.setNegativeButton("Mégse", null);
-                dialog.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         personalChalkViewModel.getAllPersonalChalks().observe(MainActivity.this, new Observer<List<PersonalChalk>>() {
@@ -256,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.setTitle("Megerősítés");
                 dialog.setMessage("Biztos, hogy töröljük?");
                 dialog.setNegativeButton("Mégse", null);
-                dialog.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         carViewModel.deleteAllCars();

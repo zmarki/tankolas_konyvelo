@@ -1,4 +1,7 @@
-package com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.Data;
+
+import com.fantastic_four.tankolas_konyvelo.Car;
+import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 
 import java.util.List;
 

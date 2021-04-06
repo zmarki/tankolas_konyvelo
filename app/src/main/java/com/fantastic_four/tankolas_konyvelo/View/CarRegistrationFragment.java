@@ -1,4 +1,4 @@
-package com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.View;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.fantastic_four.tankolas_konyvelo.Car;
+import com.fantastic_four.tankolas_konyvelo.MainActivity;
+import com.fantastic_four.tankolas_konyvelo.R;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.databinding.CarRegistrationBinding;
 

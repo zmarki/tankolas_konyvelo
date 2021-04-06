@@ -1,4 +1,4 @@
-package com.fantastic_four.tankolas_konyvelo;
+package com.fantastic_four.tankolas_konyvelo.View;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.fantastic_four.tankolas_konyvelo.Data.Fuel;
 import com.fantastic_four.tankolas_konyvelo.Data.GasStation;
+import com.fantastic_four.tankolas_konyvelo.MainActivity;
+import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.R;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.FuelViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.PersonalChalkViewModel;
 import com.fantastic_four.tankolas_konyvelo.databinding.NewFillingBinding;

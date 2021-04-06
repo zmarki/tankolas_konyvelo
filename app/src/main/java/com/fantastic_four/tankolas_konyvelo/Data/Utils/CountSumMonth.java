@@ -7,20 +7,20 @@ import java.util.Date;
 import androidx.room.TypeConverters;
 
 public class CountSumMonth {
-    @TypeConverters({Converters.class})
-    private Date date;
+   // @TypeConverters({Converters.class})
+    private String date;
     private int count;
 
-    public CountSumMonth(Date date, int count) {
+    public CountSumMonth(String date, int count) {
         this.date = date;
         this.count = count;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

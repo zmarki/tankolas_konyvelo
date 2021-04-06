@@ -41,7 +41,7 @@ public interface PersonalChalkDao {
     LiveData<Double> avgConsumption();
 
     //Összes adat lekérése:
-    @Query("SELECT * from PersonalChalk")
+    @Query("SELECT * from PersonalChalk order by date asc")
     LiveData<List<PersonalChalk>> getAllPersonalChalks();
 
     @Query("select p.date as date, p.mileage as mileage, p.price as price, p.liter as liter, f.fuelName as fuelName, g.name as gasstationName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid = g.gasStationId order by date desc")
