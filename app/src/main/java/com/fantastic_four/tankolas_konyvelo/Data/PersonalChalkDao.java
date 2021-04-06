@@ -55,11 +55,11 @@ public interface PersonalChalkDao {
     LiveData<List<StatThreeModel>> statThreeData();
 
     //Átlag tankolási idököz
-    @Query("SELECT (julianday(max(date)) - julianday(min(date))) / count(*) as avgfilling from PersonalChalk")
+    @Query("SELECT (julianday(max(date)) - julianday(min(date))) / (count(*) - 1) as avgfilling from PersonalChalk")
     LiveData<Double> avgFillingDuration();
 
     //Átlag km/tankolás:
-    @Query("SELECT (max(mileage) - min(mileage)) / count(*)  as avgfilling from PersonalChalk")
+    @Query("SELECT (max(mileage) - min(mileage)) / (count(*) - 1)  as avgfilling from PersonalChalk")
     LiveData<Double> avgFillingKM();
 
     //Utolsó 5 tankolás adatai

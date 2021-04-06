@@ -1,13 +1,9 @@
 package com.fantastic_four.tankolas_konyvelo.Data.Utils;
 
-import com.fantastic_four.tankolas_konyvelo.Data.Converters;
-
 import java.util.Date;
 
-import androidx.room.TypeConverters;
-
 public class CountSumMonth {
-   // @TypeConverters({Converters.class})
+    // @TypeConverters({Converters.class})
     private String date;
     private int count;
 

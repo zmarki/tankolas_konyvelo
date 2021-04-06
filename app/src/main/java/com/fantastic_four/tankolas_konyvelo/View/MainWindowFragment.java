@@ -91,8 +91,10 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             Car car = (Car) o;
-            actualCarDetailsTextview.setText(car.brand + " " + car.type + " "
-                    + car.licensePlateNumber);
+            if (car != null) {
+                actualCarDetailsTextview.setText(car.brand + " " + car.type + " "
+                        + car.licensePlateNumber);
+            }
         }
     };
 
@@ -166,6 +168,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
                 series.setValuesOnTopSize(20);
                 series.setSpacing(50);
                 graphView.addSeries(series);
+                graphView.getViewport().setScrollable(true);
+                graphView.getViewport().setScrollableY(true);
+                graphView.getViewport().setScalable(true);
                 graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
                 graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
                 graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
