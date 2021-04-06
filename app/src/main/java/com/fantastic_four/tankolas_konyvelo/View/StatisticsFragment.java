@@ -5,34 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.DataEntry;
+import com.anychart.anychart.ValueDataEntry;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.R;
 import com.fantastic_four.tankolas_konyvelo.StatThreeModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
-import com.jjoe64.graphview.DefaultLabelFormatter;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 public class StatisticsFragment extends Fragment {
 
-    private GraphView graphView1;
-    private GraphView graphView2;
-    private GraphView graphView3;
+    private AnyChartView graphView1;
+    private AnyChartView graphView2;
+    private AnyChartView graphView3;
 
     @Nullable
     @Override
@@ -58,36 +54,16 @@ public class StatisticsFragment extends Fragment {
     private Observer getCountMonthChalk = new Observer() {
         @Override
         public void onChanged(Object o) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
             List<CountSumMonth> countSumMonths = (List<CountSumMonth>) o;
             if (countSumMonths.size() > 1) {
-                DataPoint dataPoints[] = new DataPoint[countSumMonths.size()];
+                Cartesian bar = AnyChart.column();
+                List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < countSumMonths.size(); i++) {
-                    try {
-                        Date date = simpleDateFormat.parse(countSumMonths.get(i).getDate());
-                        dataPoints[i] = new DataPoint(date, countSumMonths.get(i).getCount());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-
+                    data.add(new ValueDataEntry(countSumMonths.get(i).getDate(), countSumMonths.get(i).getCount()));
                 }
-                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-                series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
-                series.setDrawValuesOnTop(true);
-                series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                series.setValuesOnTopSize(20);
-                series.setSpacing(50);
-                graphView1.addSeries(series);
-                graphView1.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                graphView1.getGridLabelRenderer().setNumHorizontalLabels(4);
-                graphView1.getViewport().setMinY(0.0d);
-                graphView1.getViewport().setScrollable(true);
-                graphView1.getViewport().setScalable(true);
-                graphView1.getViewport().setScrollableY(true);
-                graphView1.getViewport().setScalableY(true);
-                graphView1.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                graphView1.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-                graphView1.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+                bar.setData(data);
+                bar.getYScale().getTicks().setInterval(1d);
+                graphView1.setChart(bar);
             }
         }
     };
@@ -97,24 +73,14 @@ public class StatisticsFragment extends Fragment {
         public void onChanged(Object o) {
             List<CountSumMonth> literSumMonths = (List<CountSumMonth>) o;
             if (literSumMonths.size() > 1) {
-                DataPoint dataPoints[] = new DataPoint[literSumMonths.size()];
+                Cartesian bar = AnyChart.column();
+                List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < literSumMonths.size(); i++) {
-                    dataPoints[i] = new DataPoint(i, literSumMonths.get(i).getCount());
+                    data.add(new ValueDataEntry(literSumMonths.get(i).getDate(), literSumMonths.get(i).getCount()));
                 }
-                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-                series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
-                series.setDrawValuesOnTop(true);
-                series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                series.setValuesOnTopSize(20);
-                series.setSpacing(50);
-                graphView2.addSeries(series);
-                graphView2.getViewport().setMinY(0);
-                graphView2.getViewport().setScrollable(true);
-                graphView2.getViewport().setScrollableY(true);
-                graphView2.getViewport().setScalable(true);
-                graphView2.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                graphView2.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-                graphView2.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+                bar.setData(data);
+                bar.getYScale().getTicks().setInterval(1d);
+                graphView2.setChart(bar);
             }
         }
     };
@@ -122,46 +88,16 @@ public class StatisticsFragment extends Fragment {
     private Observer getStatThreeData = new Observer() {
         @Override
         public void onChanged(Object o) {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             List<StatThreeModel> statThreeList = (List<StatThreeModel>) o;
             if (statThreeList.size() > 1) {
-                DataPoint dataPoints[] = new DataPoint[statThreeList.size()];
-                String labels[] = new String[statThreeList.size()];
+                Cartesian bar = AnyChart.column();
+                List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < statThreeList.size(); i++) {
-                    try {
-                        dataPoints[i] = new DataPoint(simpleDateFormat.parse(statThreeList.get(i).getDate()), statThreeList.get(i).getMileageDiff());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    labels[i] = statThreeList.get(i).getDate();
+                    data.add(new ValueDataEntry(statThreeList.get(i).getDate(), statThreeList.get(i).getMileageDiff()));
                 }
-                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-                series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
-                series.setDrawValuesOnTop(true);
-                series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                series.setValuesOnTopSize(20);
-                series.setSpacing(50);
-                graphView3.addSeries(series);
-                /*StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView3);
-                staticLabelsFormatter.setHorizontalLabels(labels);
-                graphView3.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);*/
-                graphView3.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-                    @Override
-                    public String formatLabel(double value, boolean isValueX) {
-                        if (isValueX) {
-                            return simpleDateFormat.format(value);
-                        } else {
-                            return super.formatLabel(value, isValueX);
-                        }
-                    }
-                });
-                graphView3.getViewport().setMinY(0);
-                graphView3.getViewport().setScrollable(true);
-                graphView3.getViewport().setScrollableY(true);
-                graphView3.getViewport().setScalable(true);
-                graphView3.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                graphView3.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-                graphView3.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+                bar.setData(data);
+                bar.getYScale().getTicks().setInterval(1d);
+                graphView3.setChart(bar);
             }
         }
     };

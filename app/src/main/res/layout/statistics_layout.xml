@@ -30,7 +30,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statistics_title" />
 
-    <com.jjoe64.graphview.GraphView
+    <com.anychart.anychart.AnyChartView
         android:id="@+id/statistics_first_stat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -52,7 +52,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statistics_first_stat" />
 
-    <com.jjoe64.graphview.GraphView
+    <com.anychart.anychart.AnyChartView
         android:id="@+id/statistics_second_stat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -74,7 +74,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/statistics_second_stat" />
 
-    <com.jjoe64.graphview.GraphView
+    <com.anychart.anychart.AnyChartView
         android:id="@+id/statistics_third_stat"
         android:layout_width="match_parent"
         android:layout_height="0dp"

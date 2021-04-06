@@ -257,7 +257,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.jjoe64.graphview.GraphView
+    <com.anychart.anychart.AnyChartView
         android:id="@+id/graph_main_screen"
         android:layout_width="match_parent"
         android:layout_height="200dp"

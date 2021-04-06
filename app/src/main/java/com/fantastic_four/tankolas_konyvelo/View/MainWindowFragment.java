@@ -7,24 +7,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.anychart.anychart.AnyChart;
+import com.anychart.anychart.AnyChartView;
+import com.anychart.anychart.Cartesian;
+import com.anychart.anychart.DataEntry;
+import com.anychart.anychart.ValueDataEntry;
 import com.fantastic_four.tankolas_konyvelo.Car;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.MainActivity;
 import com.fantastic_four.tankolas_konyvelo.R;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
-import com.jjoe64.graphview.series.DataPoint;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -37,7 +38,7 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd.");
     private DecimalFormat df = new DecimalFormat("###.##");
 
-    private GraphView graphView;
+    private AnyChartView graphView;
 
     private TextView actualCarDetailsTextview;
     private TextView lastFillingTextView;
@@ -157,27 +158,14 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         public void onChanged(Object o) {
             List<LastFive> lastFives = (List<LastFive>) o;
             if (lastFives != null && lastFives.size() > 0) {
-                DataPoint dataPoints[] = new DataPoint[lastFives.size()];
+                Cartesian bar = AnyChart.column();
+                List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < lastFives.size(); i++) {
-                    dataPoints[i] = new DataPoint(lastFives.get(i).getDate().getTime(), lastFives.get(i).getLiter());
+                    data.add(new ValueDataEntry(simpleDateFormat.format(lastFives.get(i).getDate()), lastFives.get(i).getLiter()));
                 }
-                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-                series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
-                series.setDrawValuesOnTop(true);
-                series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                series.setValuesOnTopSize(20);
-                series.setSpacing(50);
-                graphView.addSeries(series);
-                graphView.getViewport().setScrollable(true);
-                graphView.getViewport().setScrollableY(true);
-                graphView.getViewport().setScalable(true);
-                graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-                graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-                graphView.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-                graphView.getViewport().setMinY(0);
-                graphView.getViewport().setMinX(lastFives.get(0).getDate().getTime());
-                graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime());
+                bar.setData(data);
+                bar.getYScale().getTicks().setInterval(1d);
+                graphView.setChart(bar);
             }
         }
     };
