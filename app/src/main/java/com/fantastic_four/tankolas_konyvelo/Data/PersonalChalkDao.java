@@ -33,6 +33,9 @@ public interface PersonalChalkDao {
     @Query("select date, price, liter, fuelName, g.name as GSName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid=g.gasStationId ORDER BY date LIMIT 1")
     LiveData<LastFive> lastChalk();
 
+    @Query("select max(mileage) as maxMil from PersonalChalk")
+    LiveData<Integer> lastChalkMileage();
+
     //Átlagpsan tankolt mennyiség
     @Query("SELECT AVG(liter) as avgLiter FROM PersonalChalk")
     LiveData<Float> avgLiter();

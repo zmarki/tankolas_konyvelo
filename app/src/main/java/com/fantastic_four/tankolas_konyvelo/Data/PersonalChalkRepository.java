@@ -21,6 +21,7 @@ public class PersonalChalkRepository {
     private final LiveData<List<CountSumMonth>> sumLiterMonthChalk;
     private final LiveData<List<LastFive>> lastFiveChalk;
     private final LiveData<LastFive> lastChalk;
+    private final LiveData<Integer> lastChalkMileage;
     private final LiveData<Double> avgConsumption;
     private final LiveData<Double> avgFillingKM;
     private final LiveData<Float> avgLiter;
@@ -36,6 +37,7 @@ public class PersonalChalkRepository {
         sumLiterMonthChalk = personalChalkDao.sumLiterMonthChalk();
         lastFiveChalk = personalChalkDao.lastFiveChalk();
         lastChalk = personalChalkDao.lastChalk();
+        lastChalkMileage = personalChalkDao.lastChalkMileage();
         avgConsumption = personalChalkDao.avgConsumption();
         avgFillingKM = personalChalkDao.avgFillingKM();
         avgLiter = personalChalkDao.avgLiter();
@@ -125,6 +127,10 @@ public class PersonalChalkRepository {
         return lastFiveChalk;
     }
 
+    public LiveData<Integer> getLastChalkMileage() {
+        return lastChalkMileage;
+    }
+
     public LiveData<List<PersonalChalk>> getAllPersonalChalks() {
         return allData;
     }
@@ -133,7 +139,7 @@ public class PersonalChalkRepository {
         return allDataWithGSFuelName;
     }
 
-    public LiveData<List<StatThreeModel>> getStatThreeData(){
+    public LiveData<List<StatThreeModel>> getStatThreeData() {
         return statThreeData;
     }
 }

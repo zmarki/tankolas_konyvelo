@@ -53,6 +53,8 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
     private List<Fuel> fuelTypes;
     private List<Fuel> selectedStationFuelTypes;
 
+    private int lastChalkMileage = 0;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,15 +68,14 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //
-        //betölteni az előző km óraállást és ellenőrizni, hogy az új érték nagyobb-e!!!
-        //
 
         mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         personalChalkViewModel = new ViewModelProvider(requireActivity()).get(PersonalChalkViewModel.class);
         fuelViewModel = new ViewModelProvider(requireActivity()).get(FuelViewModel.class);
         fuelViewModel.getFuels().observe(getViewLifecycleOwner(), fuelsObserver);
         fuelViewModel.getGasStations().observe(getViewLifecycleOwner(), gasStationsObserver);
+
+        personalChalkViewModel.getLastChalkMileage().observe(getViewLifecycleOwner(), getLastChalkMileage);
 
         fuelTypeSpinner = view.findViewById(R.id.text_new_filling_fuel_type_spinner);
         fuelTypeSpinner.setOnItemSelectedListener(this);
@@ -111,6 +112,8 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
                 if (personalChalk.liter == 0 || personalChalk.mileage == 0 || personalChalk.price == 0 ||
                         personalChalk.date == null) {
                     Toast.makeText(getActivity(), "Nincs minden mező kitöltve!", Toast.LENGTH_LONG).show();
+                } else if (personalChalk.mileage <= lastChalkMileage) {
+                    Toast.makeText(getActivity(), "A megadott KM óraállás kisebb, mint a korábbi!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), "Adatbevitel sikeres", Toast.LENGTH_LONG).show();
                     personalChalkViewModel.insertPersonalChalk(personalChalk);
@@ -125,6 +128,15 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
         fuelTypeSpinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, selectedStationFuelTypesString);
         fuelTypeSpinner.setAdapter(fuelTypeSpinnerAdapter);
     }
+
+    private Observer getLastChalkMileage = new Observer() {
+        @Override
+        public void onChanged(Object o) {
+            Integer mil = (Integer) o;
+            lastChalkMileage = mil;
+            personalChalk.mileage = lastChalkMileage;
+        }
+    };
 
     private Observer fuelsObserver = new Observer() {
         @Override

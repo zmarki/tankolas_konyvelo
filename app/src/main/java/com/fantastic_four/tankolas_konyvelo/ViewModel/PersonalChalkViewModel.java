@@ -24,6 +24,10 @@ public class PersonalChalkViewModel extends AndroidViewModel {
         personalChalkRepository.insertPersonalChalk(personalChalk);
     }
 
+    public LiveData<Integer> getLastChalkMileage() {
+        return personalChalkRepository.getLastChalkMileage();
+    }
+
     public LiveData<List<PersonalChalk>> getAllPersonalChalks() {
         return personalChalkRepository.getAllPersonalChalks();
     }

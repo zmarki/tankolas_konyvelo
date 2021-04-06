@@ -101,9 +101,13 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             LastFive lastFive = (LastFive) o;
-            lastFillingTextView.setText(simpleDateFormat.format(lastFive.getDate()) +
-                    " - " + lastFive.getLiter() + "L; " +
-                    lastFive.getGSName() + " (" + lastFive.getFuelName() + ")");
+            if (lastFive != null) {
+                lastFillingTextView.setText(simpleDateFormat.format(lastFive.getDate()) +
+                        " - " + lastFive.getLiter() + "L; " +
+                        lastFive.getGSName() + " (" + lastFive.getFuelName() + ")");
+            } else {
+                lastFillingTextView.setText("Nincs még tankolás megadva");
+            }
         }
     };
 
@@ -111,7 +115,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             Float amount = (Float) o;
-            avgFillingAmountTextView.setText(df.format(amount) + "L");
+            if (amount != null) {
+                avgFillingAmountTextView.setText(df.format(amount) + "L");
+            }
         }
     };
 
@@ -119,7 +125,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             Double amount = (Double) o;
-            avgConsumptionTextView.setText(df.format(amount) + "L/km");
+            if (amount != null) {
+                avgConsumptionTextView.setText(df.format(amount) + "L/km");
+            }
         }
     };
 
@@ -127,7 +135,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             Double amount = (Double) o;
-            avgFillingKMTextView.setText(df.format(amount) + "km");
+            if (amount != null) {
+                avgFillingKMTextView.setText(df.format(amount) + "km");
+            }
         }
     };
 
@@ -135,7 +145,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             Double amount = (Double) o;
-            avgFillingDurationTextView.setText(df.format(amount) + "nap");
+            if (amount != null) {
+                avgFillingDurationTextView.setText(df.format(amount) + "nap");
+            }
         }
     };
 
@@ -143,24 +155,26 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         @Override
         public void onChanged(Object o) {
             List<LastFive> lastFives = (List<LastFive>) o;
-            DataPoint dataPoints[] = new DataPoint[lastFives.size()];
-            for (int i = 0; i < lastFives.size(); i++) {
-                dataPoints[i] = new DataPoint(lastFives.get(i).getDate().getTime(), lastFives.get(i).getLiter());
+            if (lastFives != null && lastFives.size() > 0) {
+                DataPoint dataPoints[] = new DataPoint[lastFives.size()];
+                for (int i = 0; i < lastFives.size(); i++) {
+                    dataPoints[i] = new DataPoint(lastFives.get(i).getDate().getTime(), lastFives.get(i).getLiter());
+                }
+                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
+                series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
+                series.setDrawValuesOnTop(true);
+                series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
+                series.setValuesOnTopSize(20);
+                series.setSpacing(50);
+                graphView.addSeries(series);
+                graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
+                graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+                graphView.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
+                graphView.getViewport().setMinY(0);
+                graphView.getViewport().setMinX(lastFives.get(0).getDate().getTime());
+                graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime());
             }
-            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-            series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
-            series.setDrawValuesOnTop(true);
-            series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-            series.setValuesOnTopSize(20);
-            series.setSpacing(50);
-            graphView.addSeries(series);
-            graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-            graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
-            graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-            graphView.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
-            graphView.getViewport().setMinY(0);
-            graphView.getViewport().setMinX(lastFives.get(0).getDate().getTime());
-            graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime());
         }
     };
 
