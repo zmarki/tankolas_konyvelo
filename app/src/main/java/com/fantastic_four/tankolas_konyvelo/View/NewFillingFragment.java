@@ -138,8 +138,10 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
         @Override
         public void onChanged(Object o) {
             Integer mil = (Integer) o;
-            lastChalkMileage = mil;
-            personalChalk.mileage = lastChalkMileage;
+            if (mil != null) {
+                lastChalkMileage = mil;
+                personalChalk.mileage = lastChalkMileage;
+            }
         }
     };
 
