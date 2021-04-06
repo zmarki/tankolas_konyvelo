@@ -1,19 +1,22 @@
 package com.fantastic_four.tankolas_konyvelo;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fantastic_four.tankolas_konyvelo.Data.Converters;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.PersonalChalkViewModel;
-import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
+import com.fantastic_four.tankolas_konyvelo.ViewModel.RetrofitViewModel;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -39,10 +42,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int MAINWINDOWFRAGMENT_ID = 101;
     public static final int NEWFILLINGFRAGMENT_ID = 102;
     public static final int CARREGISTRATIONFRAGMENT_ID = 103;
+    public static final int LOADDATA_ID = 104;
+    public static final int PREVDATAFRAGMENT_ID = 104;
     boolean isMainWindow = false;
 
     private CarViewModel carViewModel;
     private PersonalChalkViewModel personalChalkViewModel;
+    private RetrofitViewModel retrofitViewModel;
+
+    private ProgressDialog progressDialog;
 
     @Override
     public void onBackPressed() {
@@ -73,35 +81,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         carViewModel = ViewModelProviders.of(this).get(CarViewModel.class);
         personalChalkViewModel = ViewModelProviders.of(this).get(PersonalChalkViewModel.class);
+        retrofitViewModel = new ViewModelProvider(this).get(RetrofitViewModel.class);
+        retrofitViewModel.isUpDownloading().observe(this, isUpDownloading);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //ADATOK FELTÖLTÉSE
-        Calendar calendar = Calendar.getInstance();
-       /* calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 2);
-        calendar.set(Calendar.DAY_OF_MONTH, 12);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(120, 30, 390, 1, calendar.getTime()));
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 2);
-        calendar.set(Calendar.DAY_OF_MONTH, 23);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(520, 20, 410, 4, calendar.getTime()));
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 3);
-        calendar.set(Calendar.DAY_OF_MONTH, 12);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(750, 27, 400, 7, calendar.getTime()));
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 4);
-        calendar.set(Calendar.DAY_OF_MONTH, 02);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(920, 52, 450, 16, calendar.getTime()));
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 6);
-        calendar.set(Calendar.DAY_OF_MONTH, 12);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(1480, 47, 370, 13, calendar.getTime()));
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 7);
-        calendar.set(Calendar.DAY_OF_MONTH, 20);
-        personalChalkViewModel.insertPersonalChalk(new PersonalChalk(1900, 18, 399, 10, calendar.getTime()));
-*/
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Folyamatban....");
+        progressDialog.setTitle("Adatok letöltése");
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -126,10 +112,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mainViewModel.getClickedButton().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer buttonId) {
-                changeFragment(buttonId);
+                if (buttonId == MainActivity.LOADDATA_ID) {
+                    loadDataDialog();
+                } else {
+                    changeFragment(buttonId);
+                }
             }
         });
-        mainViewModel.getClickedButton().observe(this, this);
     }
 
     private void changeFragment(int fragment_id) {
@@ -151,22 +140,119 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case CARREGISTRATIONFRAGMENT_ID:
                 fragmentTransaction.replace(R.id.fragment_placeholder, new CarRegistrationFragment());
                 break;
+            case PREVDATAFRAGMENT_ID:
+                fragmentTransaction.replace(R.id.fragment_placeholder, new PrevDataFragment());
+                break;
         }
         fragmentTransaction.commit();
     }
 
+    private Observer isUpDownloading = new Observer() {
+        @Override
+        public void onChanged(Object o) {
+            Boolean isLoading = (Boolean) o;
+            if (isLoading) {
+                progressDialog.show();
+            } else {
+                progressDialog.dismiss();
+            }
+        }
+    };
+
+    private Observer downloadedDataObserver = new Observer() {
+        @Override
+        public void onChanged(Object o) {
+            ServerResponse s = (ServerResponse) o;
+            if (s != null && s.getCar() != null && s.getChalks() != null) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("Letöltött adatok (frissítése törli az összes korábbi adatot)");
+                dialog.setMessage("Autó: " + s.getCar().brand + " (" + s.getCar().type + "), " + s.getChalks().size() + " db adat");
+                dialog.setNegativeButton("Mégse", null);
+                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        carViewModel.deleteAllCars();
+                        personalChalkViewModel.deleteAllPersonalChalks();
+                        carViewModel.insertCar(s.getCar());
+                        for (PersonalChalk personalChalk : s.getChalks()) {
+                            personalChalkViewModel.insertPersonalChalk(personalChalk);
+                        }
+                        Toast.makeText(MainActivity.this, "Új adatok beillesztve", Toast.LENGTH_LONG).show();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                    }
+                });
+                dialog.show();
+            } else {
+                Toast.makeText(MainActivity.this, "Nincs ilyen rendszámmal adat a szerveren!", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
+    private void loadDataDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        EditText editText = new EditText(MainActivity.this);
+        dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Rendszám");
+        dialog.setMessage("Add meg a rendszámot:");
+        dialog.setView(editText);
+        dialog.setNegativeButton("Mégse", null);
+        dialog.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (editText.getText().toString().length() > 3) {
+                    retrofitViewModel.downloadData(editText.getText().toString());
+                    retrofitViewModel.getDownloadedData().observe(MainActivity.this, downloadedDataObserver);
+                } else {
+                    Toast.makeText(MainActivity.this, "Túl rövid a megadott rendszám!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        dialog.show();
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        AlertDialog.Builder dialog;
         switch (item.getItemId()) {
+            case R.id.drawer_menu_prev_data:
+                changeFragment(PREVDATAFRAGMENT_ID);
+                break;
             case R.id.drawer_menu_open:
-                Toast.makeText(this, "Megnyitás", Toast.LENGTH_SHORT).show();
+                loadDataDialog();
                 break;
             case R.id.drawer_menu_save:
-                Toast.makeText(this, "Mentés", Toast.LENGTH_SHORT).show();
+                dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Megerősítés");
+                dialog.setMessage("Biztos, hogy mentsük? Minden korábbi mentés törlődik a szerveren.");
+                dialog.setNegativeButton("Mégse", null);
+                dialog.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        personalChalkViewModel.getAllPersonalChalks().observe(MainActivity.this, new Observer<List<PersonalChalk>>() {
+                            @Override
+                            public void onChanged(List<PersonalChalk> personalChalks) {
+                                carViewModel.getAllCars().observe(MainActivity.this, new Observer<List<Car>>() {
+                                    @Override
+                                    public void onChanged(List<Car> cars) {
+                                        Gson gson = new Gson();
+                                        String chalks = gson.toJson(personalChalks);
+                                        String car = gson.toJson(cars.get(0));
+                                        JsonObject jsonObject = new JsonObject();
+                                        jsonObject.addProperty("chalks", chalks);
+                                        jsonObject.addProperty("car", car);
+                                        Log.e("mainactivity", car);
+                                        retrofitViewModel.uploadData(jsonObject.toString());
+                                        drawerLayout.closeDrawer(GravityCompat.START);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                dialog.show();
                 break;
             case R.id.drawer_menu_delete:
-                Toast.makeText(this, "Törlés", Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Megerősítés");
                 dialog.setMessage("Biztos, hogy töröljük?");
                 dialog.setNegativeButton("Mégse", null);
@@ -175,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onClick(DialogInterface dialogInterface, int i) {
                         carViewModel.deleteAllCars();
                         personalChalkViewModel.deleteAllPersonalChalks();
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                         changeFragment(FIRSTRUNFRAGMENT_ID);
                     }
@@ -182,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialog.show();
                 break;
         }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return false;
     }
 

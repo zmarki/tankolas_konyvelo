@@ -45,6 +45,8 @@ public class FirstRunOpenScreenFragment extends Fragment implements View.OnClick
     public void onClick(View view) {
         if (view.getId() == R.id.img_first_run_register_new || view.getId() == R.id.text_first_run_register_new) {
             mainViewModel.setClickedButtonId(MainActivity.CARREGISTRATIONFRAGMENT_ID);
+        } else if (view.getId() == R.id.img_first_run_open || view.getId() == R.id.text_first_run_open){
+            mainViewModel.setClickedButtonId(MainActivity.LOADDATA_ID);
         }
     }
 }

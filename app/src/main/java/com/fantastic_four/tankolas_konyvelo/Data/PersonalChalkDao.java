@@ -3,6 +3,7 @@ package com.fantastic_four.tankolas_konyvelo.Data;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
 
 import java.util.List;
 
@@ -42,6 +43,9 @@ public interface PersonalChalkDao {
     //Összes adat lekérése:
     @Query("SELECT * from PersonalChalk")
     LiveData<List<PersonalChalk>> getAllPersonalChalks();
+
+    @Query("select p.date as date, p.mileage as mileage, p.price as price, p.liter as liter, f.fuelName as fuelName, g.name as gasstationName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid = g.gasStationId order by date desc")
+    LiveData<List<PrevDataModel>> getAllPersonalChalksWithGSFuelNames();
 
 
     //Átlag tankolási idököz

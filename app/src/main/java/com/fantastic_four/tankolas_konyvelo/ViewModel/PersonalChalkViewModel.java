@@ -2,10 +2,9 @@ package com.fantastic_four.tankolas_konyvelo.ViewModel;
 
 import android.app.Application;
 
-import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
-import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
-import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 import com.fantastic_four.tankolas_konyvelo.Data.PersonalChalkRepository;
+import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
 
 import java.util.List;
 
@@ -25,7 +24,15 @@ public class PersonalChalkViewModel extends AndroidViewModel {
         personalChalkRepository.insertPersonalChalk(personalChalk);
     }
 
-    public void deleteAllPersonalChalks(){
+    public LiveData<List<PersonalChalk>> getAllPersonalChalks() {
+        return personalChalkRepository.getAllPersonalChalks();
+    }
+
+    public LiveData<List<PrevDataModel>> getAllDataWithGSFuelName() {
+        return personalChalkRepository.getAllDataWithGSFuelName();
+    }
+
+    public void deleteAllPersonalChalks() {
         personalChalkRepository.deleteAllPersonalChalks();
     }
 }

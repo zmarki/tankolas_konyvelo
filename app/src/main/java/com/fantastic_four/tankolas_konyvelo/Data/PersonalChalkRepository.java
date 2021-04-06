@@ -3,9 +3,10 @@ package com.fantastic_four.tankolas_konyvelo.Data;
 import android.content.Context;
 import android.util.Log;
 
-import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
+import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import androidx.lifecycle.LiveData;
 public class PersonalChalkRepository {
     private final PersonalChalkDao personalChalkDao;
 
-  //  private final MutableLiveData<Integer> insertResult = new MutableLiveData<>();
+    //  private final MutableLiveData<Integer> insertResult = new MutableLiveData<>();
     private final LiveData<List<CountSumMonth>> countMonthChalk;
     private final LiveData<List<CountSumMonth>> sumLiterMonthChalk;
     private final LiveData<List<LastFive>> lastFiveChalk;
@@ -24,6 +25,7 @@ public class PersonalChalkRepository {
     private final LiveData<Float> avgLiter;
     private final LiveData<Double> avgFillingDuration;
     private final LiveData<List<PersonalChalk>> allData;
+    private final LiveData<List<PrevDataModel>> allDataWithGSFuelName;
 
     public PersonalChalkRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
@@ -37,6 +39,7 @@ public class PersonalChalkRepository {
         avgLiter = personalChalkDao.avgLiter();
         avgFillingDuration = personalChalkDao.avgFillingDuration();
         allData = personalChalkDao.getAllPersonalChalks();
+        allDataWithGSFuelName = personalChalkDao.getAllPersonalChalksWithGSFuelNames();
     }
 
     public void insertPersonalChalk(PersonalChalk personalChalk) {
@@ -68,7 +71,7 @@ public class PersonalChalkRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     personalChalkDao.deleteALL();
                 } catch (Exception e) {
 
@@ -81,7 +84,7 @@ public class PersonalChalkRepository {
         return insertResult;
     }*/
 
-    public LiveData<LastFive> getLastChalk(){
+    public LiveData<LastFive> getLastChalk() {
         return lastChalk;
     }
 
@@ -100,7 +103,7 @@ public class PersonalChalkRepository {
         return avgFillingDuration;
     }
 
-    public LiveData<Double> getAvgFillingKM(){
+    public LiveData<Double> getAvgFillingKM() {
         return avgFillingKM;
     }
 
@@ -119,7 +122,11 @@ public class PersonalChalkRepository {
         return lastFiveChalk;
     }
 
-    public LiveData<List<PersonalChalk>> getAllPersonalChalks(){
+    public LiveData<List<PersonalChalk>> getAllPersonalChalks() {
         return allData;
+    }
+
+    public LiveData<List<PrevDataModel>> getAllDataWithGSFuelName() {
+        return allDataWithGSFuelName;
     }
 }

@@ -12,6 +12,7 @@ import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -148,19 +149,16 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
             for (int i = 0; i < lastFives.size(); i++) {
                 dataPoints[i] = new DataPoint(lastFives.get(i).getDate().getTime(), lastFives.get(i).getLiter());
             }
-            LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
+            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
             series.setColor(getActivity().getColor(R.color.lightgreen));
             graphView.addSeries(series);
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-
+            graphView.getGridLabelRenderer().setGridColor(R.color.white);
+            graphView.getGridLabelRenderer().setHorizontalLabelsColor(R.color.white);
+            graphView.getGridLabelRenderer().setVerticalLabelsColor(R.color.white);
+            graphView.getViewport().setMinY(0);
             graphView.getViewport().setMinX(lastFives.get(0).getDate().getTime());
-            graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime());
-          /*  graphView.getGridLabelRenderer().setNumHorizontalLabels(3);
-
-
-            graphView.getViewport().setXAxisBoundsManual(true);
-
-            graphView.getGridLabelRenderer().setHumanRounding(false);*/
+            graphView.getViewport().setMaxX(lastFives.get(lastFives.size() - 1).getDate().getTime() + 3000);
         }
     };
 
