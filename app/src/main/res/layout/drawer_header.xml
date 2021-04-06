@@ -6,6 +6,7 @@
     android:background="@color/gray1">
 
     <TextView
+        android:id="@+id/drawer_header_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Skoda 1500ccm 24KW 400km"

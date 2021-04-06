@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,8 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
 
     private PersonalChalk personalChalk;
 
+    private EditText mileageEditText;
+
     private MainViewModel mainViewModel;
     private PersonalChalkViewModel personalChalkViewModel;
     private FuelViewModel fuelViewModel;
@@ -68,6 +71,8 @@ public class NewFillingFragment extends Fragment implements AdapterView.OnItemSe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mileageEditText = view.findViewById(R.id.text_new_filling_KM_edittext);
 
         mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         personalChalkViewModel = new ViewModelProvider(requireActivity()).get(PersonalChalkViewModel.class);

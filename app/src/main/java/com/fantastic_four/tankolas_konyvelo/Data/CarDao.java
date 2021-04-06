@@ -22,9 +22,6 @@ public interface CarDao {
     @Query("delete from Car")
     void deleteAllCars();
 
-    @Query("SELECT * FROM Car")
-    LiveData<List<Car>> getAllCar();
-
-    @Query("Select count(*) as num from Car")
-    LiveData<Integer> getCarCount();
+    @Query("SELECT * FROM Car limit 1")
+    LiveData<Car> getCar();
 }

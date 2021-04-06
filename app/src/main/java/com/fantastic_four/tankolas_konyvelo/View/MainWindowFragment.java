@@ -73,7 +73,7 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         statisticsViewModel.getAvgFillingDuration().observe(getViewLifecycleOwner(), getAvgFillingDuration);
         statisticsViewModel.getLastFiveChalk().observe(getViewLifecycleOwner(), getLastFiveChalk);
 
-        carViewModel.getAllCars().observe(getViewLifecycleOwner(), getAllCars);
+        carViewModel.getCar().observe(getViewLifecycleOwner(), getCar);
 
         ImageView addNewFillingImg = view.findViewById(R.id.img_add_new_filling);
         TextView addNewFillingText = view.findViewById(R.id.text_add_new_filling);
@@ -87,11 +87,10 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         graphView = view.findViewById(R.id.graph_main_screen);
     }
 
-    private Observer getAllCars = new Observer() {
+    private Observer getCar = new Observer() {
         @Override
         public void onChanged(Object o) {
-            List<Car> cars = (List<Car>) o;
-            Car car = cars.get(0);
+            Car car = (Car) o;
             actualCarDetailsTextview.setText(car.brand + " " + car.type + " "
                     + car.licensePlateNumber);
         }

@@ -3,9 +3,9 @@ package com.fantastic_four.tankolas_konyvelo;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fantastic_four.tankolas_konyvelo.Data.Converters;
@@ -103,12 +103,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         //van-e kocsi regisztrálva a rendszerben
-        carViewModel.getCarCount().observe(this, new Observer<Integer>() {
+        carViewModel.getCar().observe(this, new Observer<Car>() {
             @Override
-            public void onChanged(Integer integer) {
-                if (integer > 0) {
+            public void onChanged(Car car) {
+                if (car != null) {
                     getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_24px);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    TextView textView = navigationView.getHeaderView(0).findViewById(R.id.drawer_header_textview);
+                    textView.setText(car.brand + " (" + car.type + ") " + car.ccm + "ccm, " + car.kw + " KW");
                     changeFragment(MAINWINDOWFRAGMENT_ID);
                 } else {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -243,16 +245,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         personalChalkViewModel.getAllPersonalChalks().observe(MainActivity.this, new Observer<List<PersonalChalk>>() {
                             @Override
                             public void onChanged(List<PersonalChalk> personalChalks) {
-                                carViewModel.getAllCars().observe(MainActivity.this, new Observer<List<Car>>() {
+                                carViewModel.getCar().observe(MainActivity.this, new Observer<Car>() {
                                     @Override
-                                    public void onChanged(List<Car> cars) {
+                                    public void onChanged(Car car) {
                                         Gson gson = new Gson();
                                         String chalks = gson.toJson(personalChalks);
-                                        String car = gson.toJson(cars.get(0));
+                                        String carString = gson.toJson(car);
                                         JsonObject jsonObject = new JsonObject();
                                         jsonObject.addProperty("chalks", chalks);
-                                        jsonObject.addProperty("car", car);
-                                        Log.e("mainactivity", car);
+                                        jsonObject.addProperty("car", carString);
                                         retrofitViewModel.uploadData(jsonObject.toString());
                                         drawerLayout.closeDrawer(GravityCompat.START);
                                     }

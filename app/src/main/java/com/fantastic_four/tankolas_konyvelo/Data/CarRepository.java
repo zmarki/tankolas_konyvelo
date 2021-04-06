@@ -13,13 +13,13 @@ public class CarRepository {
     private CarDao carDao;
 
     private MutableLiveData<Integer> insertResult = new MutableLiveData<>();
-    private LiveData<List<Car>> allCars;
+    private LiveData<Car> actualCar;
     private LiveData<Integer> carCount = new MutableLiveData<>();
 
     public CarRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
         carDao = appDatabase.carDao();
-        allCars = carDao.getAllCar();
+        actualCar = carDao.getCar();
     }
 
 
@@ -33,9 +33,9 @@ public class CarRepository {
 
     }
 
-    public LiveData<List<Car>> getAllCars() {
+    public LiveData<Car> getCar() {
 
-        return allCars;
+        return actualCar;
     }
 
     public void deleteAllCars() {
@@ -45,10 +45,6 @@ public class CarRepository {
                 carDao.deleteAllCars();
             }
         });
-    }
-
-    public LiveData<Integer> getCarCount() {
-        return carDao.getCarCount();
     }
 
     // Beilleszti a táblázatba az adatokat egy külön szálon a háttérben, és az insertResult-ba rögziti hogy sikeres volt-e.

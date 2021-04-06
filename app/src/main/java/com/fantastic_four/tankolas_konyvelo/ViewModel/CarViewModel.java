@@ -14,13 +14,13 @@ import androidx.lifecycle.LiveData;
 public class CarViewModel extends AndroidViewModel {
     private CarRepository carRepository;
    // private LiveData<Integer> insertResult;
-    private LiveData<List<Car>> allCars;
+    private LiveData<Car> actualCar;
 
     public CarViewModel(@NonNull Application application) {
         super(application);
         carRepository = new CarRepository(application);
      //   insertResult = carRepository.getInsertResult();
-        allCars = carRepository.getAllCars();
+        actualCar = carRepository.getCar();
 
     }
 
@@ -36,12 +36,8 @@ public class CarViewModel extends AndroidViewModel {
         carRepository.deleteCar(car);
     }
 
-    public LiveData<List<Car>> getAllCars() {
-        return allCars;
-    }
-
-    public LiveData<Integer> getCarCount(){
-        return carRepository.getCarCount();
+    public LiveData<Car> getCar() {
+        return actualCar;
     }
 
     public void deleteAllCars(){
