@@ -137,6 +137,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         isMainWindow = false;
         switch (fragment_id) {
             case FIRSTRUNFRAGMENT_ID:
+                isMainWindow = true;
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 fragmentTransaction.replace(R.id.fragment_placeholder, new FirstRunOpenScreenFragment());
                 break;
             case MAINWINDOWFRAGMENT_ID:

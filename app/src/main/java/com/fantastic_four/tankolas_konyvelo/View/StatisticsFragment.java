@@ -64,6 +64,9 @@ public class StatisticsFragment extends Fragment {
                 bar.setData(data);
                 bar.getYScale().getTicks().setInterval(1d);
                 graphView1.setChart(bar);
+            } else {
+                Cartesian bar = AnyChart.column();
+                graphView1.setChart(bar);
             }
         }
     };
@@ -81,6 +84,9 @@ public class StatisticsFragment extends Fragment {
                 bar.setData(data);
                 bar.getYScale().getTicks().setInterval(1d);
                 graphView2.setChart(bar);
+            } else {
+                Cartesian bar = AnyChart.column();
+                graphView2.setChart(bar);
             }
         }
     };
@@ -97,6 +103,9 @@ public class StatisticsFragment extends Fragment {
                 }
                 bar.setData(data);
                 bar.getYScale().getTicks().setInterval(1d);
+                graphView3.setChart(bar);
+            } else {
+                Cartesian bar = AnyChart.column();
                 graphView3.setChart(bar);
             }
         }

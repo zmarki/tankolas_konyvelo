@@ -57,6 +57,8 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        graphView = view.findViewById(R.id.graph_main_screen);
+
         actualCarDetailsTextview = view.findViewById(R.id.text_actual_car_details);
         lastFillingTextView = view.findViewById(R.id.text_last_filling_details);
         avgFillingAmountTextView = view.findViewById(R.id.text_avg_filling_details);
@@ -84,8 +86,6 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         addNewFillingImg.setOnClickListener(this);
         statisticsText.setOnClickListener(this);
         statisticsImg.setOnClickListener(this);
-
-        graphView = view.findViewById(R.id.graph_main_screen);
     }
 
     private Observer getCar = new Observer() {
@@ -165,6 +165,9 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
                 }
                 bar.setData(data);
                 bar.getYScale().getTicks().setInterval(1d);
+                graphView.setChart(bar);
+            } else {
+                Cartesian bar = AnyChart.column();
                 graphView.setChart(bar);
             }
         }
