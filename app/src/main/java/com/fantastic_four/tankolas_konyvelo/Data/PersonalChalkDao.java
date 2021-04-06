@@ -4,6 +4,7 @@ import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
+import com.fantastic_four.tankolas_konyvelo.StatThreeModel;
 
 import java.util.List;
 
@@ -47,6 +48,8 @@ public interface PersonalChalkDao {
     @Query("select p.date as date, p.mileage as mileage, p.price as price, p.liter as liter, f.fuelName as fuelName, g.name as gasstationName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid = g.gasStationId order by date desc")
     LiveData<List<PrevDataModel>> getAllPersonalChalksWithGSFuelNames();
 
+    @Query("select p1.date as date, p1.mileage - p2.mileage as mileageDiff from PersonalChalk as p1, PersonalChalk as p2 where p2.date = (select date from PersonalChalk where date < p1.date order by date desc limit 1) order by p1.date asc")
+    LiveData<List<StatThreeModel>> statThreeData();
 
     //Átlag tankolási idököz
     @Query("SELECT (julianday(max(date)) - julianday(min(date))) / count(*) as avgfilling from PersonalChalk")

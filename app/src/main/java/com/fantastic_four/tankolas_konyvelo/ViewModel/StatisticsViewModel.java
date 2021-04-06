@@ -6,6 +6,7 @@ import com.fantastic_four.tankolas_konyvelo.Data.PersonalChalkRepository;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
+import com.fantastic_four.tankolas_konyvelo.StatThreeModel;
 
 import java.util.List;
 
@@ -60,5 +61,9 @@ public class StatisticsViewModel extends AndroidViewModel {
 
     public LiveData<List<CountSumMonth>> getSumLiterMonthChalk() {
         return personalChalkRepository.getSumLiterMonthChalk();
+    }
+
+    public LiveData<List<StatThreeModel>> getStatThreeData() {
+        return personalChalkRepository.getStatThreeData();
     }
 }

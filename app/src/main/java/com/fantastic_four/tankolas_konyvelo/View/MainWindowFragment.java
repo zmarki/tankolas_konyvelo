@@ -11,7 +11,6 @@ import com.fantastic_four.tankolas_konyvelo.Car;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.MainActivity;
 import com.fantastic_four.tankolas_konyvelo.R;
-import com.fantastic_four.tankolas_konyvelo.View.MainViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.CarViewModel;
 import com.fantastic_four.tankolas_konyvelo.ViewModel.StatisticsViewModel;
 import com.jjoe64.graphview.GraphView;
@@ -149,10 +148,14 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
                 dataPoints[i] = new DataPoint(lastFives.get(i).getDate().getTime(), lastFives.get(i).getLiter());
             }
             BarGraphSeries<DataPoint> series = new BarGraphSeries<>(dataPoints);
-            series.setColor(getActivity().getColor(R.color.lightgreen));
+            series.setColor(getActivity().getColor(R.color.darkgreen_opposite));
+            series.setDrawValuesOnTop(true);
+            series.setValuesOnTopColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
+            series.setValuesOnTopSize(20);
+            series.setSpacing(50);
             graphView.addSeries(series);
             graphView.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-            graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.white));
+            graphView.getGridLabelRenderer().setGridColor(ContextCompat.getColor(getActivity(), R.color.darkgreen_opposite));
             graphView.getGridLabelRenderer().setHorizontalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
             graphView.getGridLabelRenderer().setVerticalLabelsColor(ContextCompat.getColor(getActivity(), R.color.white));
             graphView.getViewport().setMinY(0);

@@ -7,6 +7,7 @@ import com.fantastic_four.tankolas_konyvelo.Data.Utils.CountSumMonth;
 import com.fantastic_four.tankolas_konyvelo.Data.Utils.LastFive;
 import com.fantastic_four.tankolas_konyvelo.PersonalChalk;
 import com.fantastic_four.tankolas_konyvelo.PrevDataModel;
+import com.fantastic_four.tankolas_konyvelo.StatThreeModel;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class PersonalChalkRepository {
     private final LiveData<Double> avgFillingDuration;
     private final LiveData<List<PersonalChalk>> allData;
     private final LiveData<List<PrevDataModel>> allDataWithGSFuelName;
+    private final LiveData<List<StatThreeModel>> statThreeData;
 
     public PersonalChalkRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
@@ -40,6 +42,7 @@ public class PersonalChalkRepository {
         avgFillingDuration = personalChalkDao.avgFillingDuration();
         allData = personalChalkDao.getAllPersonalChalks();
         allDataWithGSFuelName = personalChalkDao.getAllPersonalChalksWithGSFuelNames();
+        statThreeData = personalChalkDao.statThreeData();
     }
 
     public void insertPersonalChalk(PersonalChalk personalChalk) {
@@ -128,5 +131,9 @@ public class PersonalChalkRepository {
 
     public LiveData<List<PrevDataModel>> getAllDataWithGSFuelName() {
         return allDataWithGSFuelName;
+    }
+
+    public LiveData<List<StatThreeModel>> getStatThreeData(){
+        return statThreeData;
     }
 }
