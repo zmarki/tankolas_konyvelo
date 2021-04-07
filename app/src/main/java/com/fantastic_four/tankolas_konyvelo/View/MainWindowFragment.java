@@ -26,6 +26,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -165,9 +166,19 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
                 }
                 bar.setData(data);
                 bar.getYScale().getTicks().setInterval(1d);
+                bar.getXAxis().setTitle("Dátum");
+                bar.getYAxis().setTitle("liter");
+                bar.getXAxis().getTitle().setFontColor("#FFFFFF");
+                bar.getYAxis().getTitle().setFontColor("#FFFFFF");
+                bar.getBackground().fill("#02240E", 1d);
+                bar.getLabels().setEnabled(true);
+                bar.getLabels().setFontColor("#000000");
+                bar.getXAxis().getLabels().setFontColor("#FFFFFF");
+                bar.getYAxis().getLabels().setFontColor("#FFFFFF");
                 graphView.setChart(bar);
             } else {
                 Cartesian bar = AnyChart.column();
+                bar.getBackground().fill("#02240E", 1d);
                 graphView.setChart(bar);
             }
         }

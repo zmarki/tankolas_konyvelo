@@ -30,7 +30,7 @@ public interface PersonalChalkDao {
     void deleteALL();
 
     //Utolsó tankolás adatai
-    @Query("select date, price, liter, fuelName, g.name as GSName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid=g.gasStationId ORDER BY date LIMIT 1")
+    @Query("select date, price, liter, fuelName, g.name as GSName from PersonalChalk as p inner join Fuel as f on p.fuelID = f.id inner join GasStation as g on f.GSid=g.gasStationId ORDER BY date desc LIMIT 1")
     LiveData<LastFive> lastChalk();
 
     @Query("select max(mileage) as maxMil from PersonalChalk")
@@ -75,8 +75,4 @@ public interface PersonalChalkDao {
     @TypeConverters({Converters.class})
     @Query("SELECT strftime('%Y-%m', date) as date, SUM(liter) as count From PersonalChalk GROUP BY strftime('%Y-%m', date)")
     LiveData<List<CountSumMonth>> sumLiterMonthChalk();
-
-    //egy Tankolással hány Km lett megtéve
-
-
 }

@@ -55,17 +55,20 @@ public class StatisticsFragment extends Fragment {
         @Override
         public void onChanged(Object o) {
             List<CountSumMonth> countSumMonths = (List<CountSumMonth>) o;
-            if (countSumMonths.size() > 1) {
+            if (countSumMonths.size() > 0) {
                 Cartesian bar = AnyChart.column();
                 List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < countSumMonths.size(); i++) {
                     data.add(new ValueDataEntry(countSumMonths.get(i).getDate(), countSumMonths.get(i).getCount()));
                 }
                 bar.setData(data);
-                bar.getYScale().getTicks().setInterval(1d);
+                bar.getXAxis().setTitle("Dátum");
+                bar.getYAxis().setTitle("db");
+                setBarStyle(bar);
                 graphView1.setChart(bar);
             } else {
                 Cartesian bar = AnyChart.column();
+                bar.getBackground().fill("#02240E", 1d);
                 graphView1.setChart(bar);
             }
         }
@@ -75,17 +78,20 @@ public class StatisticsFragment extends Fragment {
         @Override
         public void onChanged(Object o) {
             List<CountSumMonth> literSumMonths = (List<CountSumMonth>) o;
-            if (literSumMonths.size() > 1) {
+            if (literSumMonths.size() > 0) {
                 Cartesian bar = AnyChart.column();
                 List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < literSumMonths.size(); i++) {
                     data.add(new ValueDataEntry(literSumMonths.get(i).getDate(), literSumMonths.get(i).getCount()));
                 }
                 bar.setData(data);
-                bar.getYScale().getTicks().setInterval(1d);
+                bar.getXAxis().setTitle("Dátum");
+                bar.getYAxis().setTitle("liter");
+                setBarStyle(bar);
                 graphView2.setChart(bar);
             } else {
                 Cartesian bar = AnyChart.column();
+                bar.getBackground().fill("#02240E", 1d);
                 graphView2.setChart(bar);
             }
         }
@@ -95,19 +101,33 @@ public class StatisticsFragment extends Fragment {
         @Override
         public void onChanged(Object o) {
             List<StatThreeModel> statThreeList = (List<StatThreeModel>) o;
-            if (statThreeList.size() > 1) {
+            if (statThreeList.size() > 0) {
                 Cartesian bar = AnyChart.column();
                 List<DataEntry> data = new ArrayList<>();
                 for (int i = 0; i < statThreeList.size(); i++) {
                     data.add(new ValueDataEntry(statThreeList.get(i).getDate(), statThreeList.get(i).getMileageDiff()));
                 }
                 bar.setData(data);
-                bar.getYScale().getTicks().setInterval(1d);
+                bar.getXAxis().setTitle("Dátum");
+                bar.getYAxis().setTitle("km");
+                setBarStyle(bar);
                 graphView3.setChart(bar);
             } else {
                 Cartesian bar = AnyChart.column();
+                bar.getBackground().fill("#02240E", 1d);
                 graphView3.setChart(bar);
             }
         }
     };
+
+    private void setBarStyle(Cartesian bar) {
+        bar.getXAxis().getTitle().setFontColor("#FFFFFF");
+        bar.getYAxis().getTitle().setFontColor("#FFFFFF");
+        bar.getBackground().fill("#02240E", 1d);
+        bar.getLabels().setEnabled(true);
+        bar.getLabels().setFontColor("#000000");
+        bar.getXAxis().getLabels().setFontColor("#FFFFFF");
+        bar.getYAxis().getLabels().setFontColor("#FFFFFF");
+        bar.getYScale().getTicks().setInterval(1d);
+    }
 }

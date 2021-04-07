@@ -9,6 +9,7 @@
 
     <color name="darkgreen_background">#FF02240E</color>
     <color name="darkgreen_opposite">#FFFDDBF1</color>
+    <color name="darkgreen_complementary">#FF411D04</color>
     <color name="middlegreen">#FF22BD31</color>
     <color name="lightgreen">#FF7CFF89</color>
     <color name="white">#FFFFFFFF</color>

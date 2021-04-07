@@ -3,6 +3,7 @@ package com.fantastic_four.tankolas_konyvelo;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.replace(R.id.fragment_placeholder, new NewFillingFragment());
                 break;
             case CARREGISTRATIONFRAGMENT_ID:
+                isMainWindow = true;
                 fragmentTransaction.replace(R.id.fragment_placeholder, new CarRegistrationFragment());
                 break;
             case PREVDATAFRAGMENT_ID:
@@ -258,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         jsonObject.addProperty("car", carString);
                                         retrofitViewModel.uploadData(jsonObject.toString());
                                         drawerLayout.closeDrawer(GravityCompat.START);
+                                        Toast.makeText(MainActivity.this, "Feltöltés sikeres", Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }
