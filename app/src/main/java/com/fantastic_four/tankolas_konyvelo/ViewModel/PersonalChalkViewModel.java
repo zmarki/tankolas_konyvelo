@@ -39,4 +39,8 @@ public class PersonalChalkViewModel extends AndroidViewModel {
     public void deleteAllPersonalChalks() {
         personalChalkRepository.deleteAllPersonalChalks();
     }
+
+    public LiveData<Boolean> isAllChalksDeleted() {
+        return personalChalkRepository.getIsAllChalksDeleted();
+    }
 }

@@ -3,7 +3,6 @@ package com.fantastic_four.tankolas_konyvelo;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final int PREVDATAFRAGMENT_ID = 105;
     public static final int STATISTICSFRAGMENT_ID = 106;
     boolean isMainWindow = false;
+    boolean toFirstRunOpenScreen = false;
+
+    private ServerResponse serverResponse;
 
     private CarViewModel carViewModel;
     private PersonalChalkViewModel personalChalkViewModel;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (isMainWindow) {
             this.moveTaskToBack(true);
+        } else if (toFirstRunOpenScreen) {
+            changeFragment(FIRSTRUNFRAGMENT_ID);
         } else {
             changeFragment(MAINWINDOWFRAGMENT_ID);
         }
@@ -120,6 +124,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        carViewModel.isAllCarDeleted().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    if (serverResponse != null && serverResponse.getCar() != null) {
+                        carViewModel.insertCar(serverResponse.getCar());
+                        serverResponse.setCar(null);
+                    }
+                }
+            }
+        });
+
+        personalChalkViewModel.isAllChalksDeleted().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (serverResponse != null && serverResponse.getChalks() != null) {
+                    for (PersonalChalk personalChalk : serverResponse.getChalks()) {
+                        personalChalkViewModel.insertPersonalChalk(personalChalk);
+                    }
+                    serverResponse.setChalkList(null);
+                }
+            }
+        });
+
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         mainViewModel.getClickedButton().observe(this, new Observer<Integer>() {
             @Override
@@ -136,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void changeFragment(int fragment_id) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         isMainWindow = false;
+        toFirstRunOpenScreen = false;
         switch (fragment_id) {
             case FIRSTRUNFRAGMENT_ID:
                 isMainWindow = true;
@@ -152,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentTransaction.replace(R.id.fragment_placeholder, new NewFillingFragment());
                 break;
             case CARREGISTRATIONFRAGMENT_ID:
-                isMainWindow = true;
+                toFirstRunOpenScreen = true;
                 fragmentTransaction.replace(R.id.fragment_placeholder, new CarRegistrationFragment());
                 break;
             case PREVDATAFRAGMENT_ID:
@@ -180,23 +209,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Observer downloadedDataObserver = new Observer() {
         @Override
         public void onChanged(Object o) {
-            ServerResponse s = (ServerResponse) o;
-            if (s != null && s.getCar() != null && s.getChalks() != null) {
+            serverResponse = (ServerResponse) o;
+            if (serverResponse != null && serverResponse.getCar() != null && serverResponse.getChalks() != null) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
                 dialog.setTitle("Letöltött adatok (frissítése törli az összes korábbi adatot)");
-                dialog.setMessage("Autó: " + s.getCar().brand + " (" + s.getCar().type + "), " + s.getChalks().size() + " db adat");
+                dialog.setMessage("Autó: " + serverResponse.getCar().brand + " (" + serverResponse.getCar().type + "), " + serverResponse.getChalks().size() + " db adat");
                 dialog.setNegativeButton("Mégse", null);
                 dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         carViewModel.deleteAllCars();
                         personalChalkViewModel.deleteAllPersonalChalks();
-                        carViewModel.insertCar(s.getCar());
-                        for (PersonalChalk personalChalk : s.getChalks()) {
-                            personalChalkViewModel.insertPersonalChalk(personalChalk);
-                        }
                         Toast.makeText(MainActivity.this, "Új adatok beillesztve", Toast.LENGTH_LONG).show();
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        changeFragment(MAINWINDOWFRAGMENT_ID);
                     }
                 });
                 dialog.show();

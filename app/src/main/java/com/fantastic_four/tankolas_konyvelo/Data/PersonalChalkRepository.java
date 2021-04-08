@@ -12,6 +12,7 @@ import com.fantastic_four.tankolas_konyvelo.StatThreeModel;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class PersonalChalkRepository {
     private final PersonalChalkDao personalChalkDao;
@@ -30,6 +31,7 @@ public class PersonalChalkRepository {
     private final LiveData<List<PersonalChalk>> allData;
     private final LiveData<List<PrevDataModel>> allDataWithGSFuelName;
     private final LiveData<List<StatThreeModel>> statThreeData;
+    private MutableLiveData<Boolean> isAllChalksDeleted = new MutableLiveData<>();
 
     public PersonalChalkRepository(Context context) {
         AppDatabase appDatabase = AppDatabase.getInstance(context);
@@ -80,11 +82,16 @@ public class PersonalChalkRepository {
             public void run() {
                 try {
                     personalChalkDao.deleteALL();
+                    isAllChalksDeleted.postValue(true);
                 } catch (Exception e) {
 
                 }
             }
         }).start();
+    }
+
+    public LiveData<Boolean> getIsAllChalksDeleted() {
+        return isAllChalksDeleted;
     }
 
    /* public MutableLiveData<Integer> getInsertResult() {
