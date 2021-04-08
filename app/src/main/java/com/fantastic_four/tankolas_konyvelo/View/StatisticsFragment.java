@@ -29,6 +29,7 @@ public class StatisticsFragment extends Fragment {
     private AnyChartView graphView1;
     private AnyChartView graphView2;
     private AnyChartView graphView3;
+    private AnyChartView graphView4;
 
     @Nullable
     @Override
@@ -45,10 +46,12 @@ public class StatisticsFragment extends Fragment {
         graphView1 = view.findViewById(R.id.statistics_first_stat);
         graphView2 = view.findViewById(R.id.statistics_second_stat);
         graphView3 = view.findViewById(R.id.statistics_third_stat);
+        graphView4 = view.findViewById(R.id.statistics_fourth_stat);
 
         statisticsViewModel.getCountMonthChalk().observe(getViewLifecycleOwner(), getCountMonthChalk);
         statisticsViewModel.getSumLiterMonthChalk().observe(getViewLifecycleOwner(), getSumLiterMonthChalk);
         statisticsViewModel.getStatThreeData().observe(getViewLifecycleOwner(), getStatThreeData);
+        statisticsViewModel.getSumMoneyMonthChalk().observe(getViewLifecycleOwner(), getSumMoneyMonthChalk);
     }
 
     private Observer getCountMonthChalk = new Observer() {
@@ -120,12 +123,35 @@ public class StatisticsFragment extends Fragment {
         }
     };
 
+    private Observer getSumMoneyMonthChalk = new Observer() {
+        @Override
+        public void onChanged(Object o) {
+            List<CountSumMonth> literSumMonths = (List<CountSumMonth>) o;
+            if (literSumMonths.size() > 0) {
+                Cartesian bar = AnyChart.column();
+                List<DataEntry> data = new ArrayList<>();
+                for (int i = 0; i < literSumMonths.size(); i++) {
+                    data.add(new ValueDataEntry(literSumMonths.get(i).getDate(), literSumMonths.get(i).getCount()));
+                }
+                bar.setData(data);
+                bar.getXAxis().setTitle("Dátum");
+                bar.getYAxis().setTitle("Ft");
+                setBarStyle(bar);
+                graphView4.setChart(bar);
+            } else {
+                Cartesian bar = AnyChart.column();
+                bar.getBackground().fill("#02240E", 1d);
+                graphView4.setChart(bar);
+            }
+        }
+    };
+
     private void setBarStyle(Cartesian bar) {
         bar.getXAxis().getTitle().setFontColor("#FFFFFF");
         bar.getYAxis().getTitle().setFontColor("#FFFFFF");
         bar.getBackground().fill("#02240E", 1d);
         bar.getLabels().setEnabled(true);
-        bar.getLabels().setFontColor("#000000");
+        bar.getLabels().setFontColor("#FDDBF1");
         bar.getXAxis().getLabels().setFontColor("#FFFFFF");
         bar.getYAxis().getLabels().setFontColor("#FFFFFF");
         bar.getYScale().getTicks().setInterval(1d);

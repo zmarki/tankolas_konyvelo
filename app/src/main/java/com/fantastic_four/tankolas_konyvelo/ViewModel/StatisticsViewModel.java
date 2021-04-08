@@ -63,6 +63,10 @@ public class StatisticsViewModel extends AndroidViewModel {
         return personalChalkRepository.getSumLiterMonthChalk();
     }
 
+    public LiveData<List<CountSumMonth>> getSumMoneyMonthChalk() {
+        return personalChalkRepository.getSumMoneyMonthChalk();
+    }
+
     public LiveData<List<StatThreeModel>> getStatThreeData() {
         return personalChalkRepository.getStatThreeData();
     }
