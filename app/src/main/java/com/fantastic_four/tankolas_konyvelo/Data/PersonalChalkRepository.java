@@ -19,6 +19,7 @@ public class PersonalChalkRepository {
     //  private final MutableLiveData<Integer> insertResult = new MutableLiveData<>();
     private final LiveData<List<CountSumMonth>> countMonthChalk;
     private final LiveData<List<CountSumMonth>> sumLiterMonthChalk;
+    private final LiveData<List<CountSumMonth>> sumMoneyMonthChalk;
     private final LiveData<List<LastFive>> lastFiveChalk;
     private final LiveData<LastFive> lastChalk;
     private final LiveData<Integer> lastChalkMileage;
@@ -35,6 +36,7 @@ public class PersonalChalkRepository {
         personalChalkDao = appDatabase.personalChalkDao();
         countMonthChalk = personalChalkDao.countMonthChalk();
         sumLiterMonthChalk = personalChalkDao.sumLiterMonthChalk();
+        sumMoneyMonthChalk = personalChalkDao.sumMoneyMonthChalk();
         lastFiveChalk = personalChalkDao.lastFiveChalk();
         lastChalk = personalChalkDao.lastChalk();
         lastChalkMileage = personalChalkDao.lastChalkMileage();
@@ -120,6 +122,11 @@ public class PersonalChalkRepository {
     public LiveData<List<CountSumMonth>> getSumLiterMonthChalk() {
 
         return sumLiterMonthChalk;
+    }
+
+    public LiveData<List<CountSumMonth>> getSumMoneyMonthChalk() {
+
+        return sumMoneyMonthChalk;
     }
 
     public LiveData<List<LastFive>> getLastFiveChalk() {

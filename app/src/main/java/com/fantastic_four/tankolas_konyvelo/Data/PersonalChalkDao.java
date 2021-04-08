@@ -75,4 +75,9 @@ public interface PersonalChalkDao {
     @TypeConverters({Converters.class})
     @Query("SELECT strftime('%Y-%m', date) as date, SUM(liter) as count From PersonalChalk GROUP BY strftime('%Y-%m', date)")
     LiveData<List<CountSumMonth>> sumLiterMonthChalk();
+
+    //Hány forintért volt tankolva havonta
+    @TypeConverters({Converters.class})
+    @Query("SELECT strftime('%Y-%m', date) as date, SUM(liter)*sum(price) as count From PersonalChalk GROUP BY strftime('%Y-%m', date)")
+    LiveData<List<CountSumMonth>> sumMoneyMonthChalk();
 }
