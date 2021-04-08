@@ -51,7 +51,8 @@ public class PrevDataAdapter extends BaseAdapter {
         TextView kmTextView = view.findViewById(R.id.prev_data_listitem_KM);
         dateTextView.setText(simpleDateFormat.format(prevDataModels.get(i).getDate()));
         gasstationTextView.setText(prevDataModels.get(i).getGasstationName() + " (" + prevDataModels.get(i).getFuelName() + ")");
-        literTextView.setText(prevDataModels.get(i).getLiter() + " L");
+        literTextView.setText(prevDataModels.get(i).getLiter() + " L " + "(" +
+                (prevDataModels.get(i).getLiter() * prevDataModels.get(i).getPrice()) + " Ft)");
         kmTextView.setText(prevDataModels.get(i).getMileage() + " KM");
         return view;
     }
