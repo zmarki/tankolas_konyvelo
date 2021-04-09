@@ -40,8 +40,8 @@ public interface PersonalChalkDao {
     @Query("SELECT AVG(liter) as avgLiter FROM PersonalChalk")
     LiveData<Float> avgLiter();
 
-    //Átlag fogyasztás:
-    @Query("SELECT SUM(liter)/((MAX(mileage)-MIN(mileage))/100) as avgCons FROM PersonalChalk")
+    //Átlag fogyasztás(szumma liter (kivéve az utolsó) osztva az utolsó és első km órallások különbségével, szorozva 100-zal):
+    @Query("select cast((sum(p2.liter)/ (select count(*) from PersonalChalk)) as real) / cast((max(p1.mileage) - min(p1.mileage)) as real) *100 as avgCon from PersonalChalk as p1, PersonalChalk as p2 where p2.id < (select max(id) from PersonalChalk)")
     LiveData<Double> avgConsumption();
 
     //Összes adat lekérése:
