@@ -26,7 +26,7 @@
             android:layout_marginLeft="80dp"
             android:background="@color/gray1"
             android:text="@={car.licensePlateNumber}"
-            android:textColor="@color/darkgreen_background"
+            android:textColor="@color/darkgreen_complementary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_car_registration_license_plate" />
 
@@ -37,7 +37,7 @@
             android:layout_marginLeft="80dp"
             android:background="@color/gray1"
             android:text="@={car.brand}"
-            android:textColor="@color/darkgreen_background"
+            android:textColor="@color/darkgreen_complementary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_car_registration_brand" />
 
@@ -48,7 +48,7 @@
             android:layout_marginLeft="80dp"
             android:background="@color/gray1"
             android:text="@={car.type}"
-            android:textColor="@color/darkgreen_background"
+            android:textColor="@color/darkgreen_complementary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_car_registration_type" />
 
@@ -60,7 +60,7 @@
             android:background="@color/gray1"
             android:inputType="number"
             android:text="@={`` + car.ccm}"
-            android:textColor="@color/darkgreen_background"
+            android:textColor="@color/darkgreen_complementary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_car_registration_volume" />
 
@@ -72,7 +72,7 @@
             android:background="@color/gray1"
             android:inputType="numberDecimal"
             android:text="@={`` + car.kw}"
-            android:textColor="@color/darkgreen_background"
+            android:textColor="@color/darkgreen_complementary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_car_registration_power" />
 
