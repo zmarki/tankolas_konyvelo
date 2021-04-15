@@ -21,6 +21,7 @@ public class RetrofitRepository {
         return retrofitRepository;
     }
 
+    //Adatok feltöltése a távoli szerverre
     public void uploadData(String data) {
         isUpdownloading.setValue(true);
         Call<Void> call = RetrofitClient.getInstance().uploadData(data);
@@ -37,6 +38,7 @@ public class RetrofitRepository {
         });
     }
 
+    //Adatok letöltése a távoli szerverről
     public void downloadData(String plateNumber) {
         isUpdownloading.setValue(true);
         Call<ServerResponse> call = RetrofitClient.getInstance().getData(plateNumber);

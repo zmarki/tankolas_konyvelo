@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment a statisztikák megjelenítéséhez
 public class StatisticsFragment extends Fragment {
 
     private AnyChartView graphView1;

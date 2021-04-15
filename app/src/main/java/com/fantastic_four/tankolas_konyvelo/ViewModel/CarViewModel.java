@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+
+//Car táblához kapcsolódó műveletek
 public class CarViewModel extends AndroidViewModel {
     private CarRepository carRepository;
     // private LiveData<Integer> insertResult;

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment, amennyiben nincsenek helyi adatok
 public class FirstRunOpenScreenFragment extends Fragment implements View.OnClickListener {
 
     private MainViewModel mainViewModel;

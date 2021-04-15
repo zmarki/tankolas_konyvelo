@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+//Retrofit-es műveletek (letöltés, feltőltés)
 public class RetrofitViewModel extends AndroidViewModel {
 
     private RetrofitRepository retrofitRepository;

@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment - főoldal
 public class MainWindowFragment extends Fragment implements View.OnClickListener {
 
     private MainViewModel mainViewModel;
@@ -129,7 +130,7 @@ public class MainWindowFragment extends Fragment implements View.OnClickListener
         public void onChanged(Object o) {
             Double amount = (Double) o;
             if (amount != null) {
-                avgConsumptionTextView.setText(df.format(amount) + "L/km");
+                avgConsumptionTextView.setText(df.format(amount) + "L/100km");
             }
         }
     };

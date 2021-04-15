@@ -1,5 +1,7 @@
 package com.fantastic_four.tankolas_konyvelo;
 
+//A statisztika oldalon található 3. grafikonhoz a model
+
 public class StatThreeModel {
 
     private String date;

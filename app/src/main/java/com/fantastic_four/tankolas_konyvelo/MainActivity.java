@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Folyamatban....");
-        progressDialog.setTitle("Adatok letöltése");
+        progressDialog.setTitle("Adatok töltése");
 
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //megvizsgáljuk, hogy ha törlődött a Car tábla, akkor korábban történt-e új adatok letöltése
+        //ha igen, csere
+        //utána a szerverválasz nullázása
         carViewModel.isAllCarDeleted().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -136,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //megvizsgáljuk, hogy ha törlődött a PersonalChalk tábla, akkor korábban történt-e új adatok letöltése
+        //ha igen, csere
+        //utána a szerverválasz nullázása
         personalChalkViewModel.isAllChalksDeleted().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -149,6 +155,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        //a különböző Fragment oldalakon található gombok megnyomásaihoz tartozó figyelő
+        //adott gomb megnyomásakor adott Fragment jelenjen meg
         mainViewModel.getClickedButton().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer buttonId) {
@@ -161,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    //Kért Fragment betöltése
     private void changeFragment(int fragment_id) {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         isMainWindow = false;
@@ -194,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
+    //Ha van fel- vagy letöltés, jelenjen meg a progressdialog, egyébként tűnjön el
     private Observer isUpDownloading = new Observer() {
         @Override
         public void onChanged(Object o) {
@@ -206,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
+    //Adatok letöltése után frissítsük-e a helyi adatokat. Ha igen, az összes helyi adatot töröljük.
     private Observer downloadedDataObserver = new Observer() {
         @Override
         public void onChanged(Object o) {
@@ -232,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     };
 
+    //Dialog ablak, ahol megadjuk a rendszámot, amikhez tartozó adatokat letöltsük, majd meghívjuk a megfelelő
+    //retrofit ViewModel metódust a letöltés kivitelezéséhez
     private void loadDataDialog() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         EditText editText = new EditText(MainActivity.this);
@@ -254,16 +268,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         dialog.show();
     }
 
+    //oldalsó navigációs ablakban található menüitemekhez tartozó interfészen keresztüli függvényhívások
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         AlertDialog.Builder dialog;
         switch (item.getItemId()) {
+            //előző adatok megtekintése
             case R.id.drawer_menu_prev_data:
                 changeFragment(PREVDATAFRAGMENT_ID);
                 break;
+                //adatok letöltése szerverről
             case R.id.drawer_menu_open:
                 loadDataDialog();
                 break;
+                //adatok mentése szerverre
             case R.id.drawer_menu_save:
                 dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Megerősítés");
@@ -295,6 +313,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
                 dialog.show();
                 break;
+                //helyi adatok törlése
             case R.id.drawer_menu_delete:
                 dialog = new AlertDialog.Builder(this);
                 dialog.setTitle("Megerősítés");

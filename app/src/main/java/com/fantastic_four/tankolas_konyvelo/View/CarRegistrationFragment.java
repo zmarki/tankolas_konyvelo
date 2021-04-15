@@ -1,7 +1,6 @@
 package com.fantastic_four.tankolas_konyvelo.View;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment Autó regisztrációjához
 public class CarRegistrationFragment extends Fragment {
 
     private MainViewModel mainViewModel;
@@ -67,7 +67,6 @@ public class CarRegistrationFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("CArereg", "brand: " + car.brand);
                 if (car.type == null || car.brand == null || car.ccm == 0 || car.fuel == null || car.licensePlateNumber == null
                         || car.kw == 0 || car.type.length() < 1 || car.brand.length() < 1 || car.licensePlateNumber.length() < 5) {
                     Toast.makeText(getActivity(), "Hiányzó adatok!", Toast.LENGTH_LONG).show();

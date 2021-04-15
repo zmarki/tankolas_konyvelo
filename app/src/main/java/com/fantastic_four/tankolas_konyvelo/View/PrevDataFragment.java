@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment korábbi tankolási adatok megjelenítéséhez
 public class PrevDataFragment extends Fragment {
 
     @Nullable

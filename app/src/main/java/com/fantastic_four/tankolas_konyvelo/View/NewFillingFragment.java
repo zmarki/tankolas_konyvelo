@@ -36,6 +36,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+//Fragment új tankolás felviteléhez
 public class NewFillingFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");

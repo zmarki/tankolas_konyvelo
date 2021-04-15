@@ -13,6 +13,7 @@ import com.fantastic_four.tankolas_konyvelo.R;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+//BaseAdapter korábbi tankolási adatok megjelenítéséhez
 public class PrevDataAdapter extends BaseAdapter {
 
     private Context context;

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+//Fuel és GasStation táblához kapcsolódó műveletek
 public class FuelViewModel extends AndroidViewModel {
 
     private FuelRepository fuelRepository;

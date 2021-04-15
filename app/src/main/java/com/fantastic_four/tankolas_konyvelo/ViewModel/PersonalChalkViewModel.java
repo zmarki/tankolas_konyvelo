@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+//PersonalChalk táblához kapcsolódó műveletek
 public class PersonalChalkViewModel extends AndroidViewModel {
     private PersonalChalkRepository personalChalkRepository;
 

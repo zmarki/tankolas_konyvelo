@@ -11,10 +11,12 @@ public interface RetrofitApi {
 
     public String BASE_URL = "https://tankolas-konyvelo-db.herokuapp.com/";
 
+    //Adott rendszámhoz tartozó adatok letöltése
     @FormUrlEncoded
     @POST("get_data")
     Call<ServerResponse> getData(@Field("plateNumber") String plateNumber);
 
+    //Adott rendszámhoz tartozó adatok feltöltése
     @FormUrlEncoded
     @POST("upload_data")
     Call<Void> uploadData(@Field("data") String data);

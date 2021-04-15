@@ -15,6 +15,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+//Statisztika ablakoz tartozó lekérések
 public class StatisticsViewModel extends AndroidViewModel {
 
     private PersonalChalkRepository personalChalkRepository;
