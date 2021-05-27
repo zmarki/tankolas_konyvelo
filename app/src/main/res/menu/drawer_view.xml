@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/drawer_menu_prev_data"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:iconTint="@color/black"
+            android:title="Eddigi bevitt adatok" />
+
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_menu_open"
+            android:icon="@drawable/ic_folder_open_24px"
+            android:title="Adatbázis letöltése" />
+
+        <item
+            android:id="@+id/drawer_menu_save"
+            android:icon="@drawable/ic_save_24px"
+            android:title="Adatbázis mentése" />
+
+        <item
+            android:id="@+id/drawer_menu_delete"
+            android:icon="@drawable/ic_delete_24px"
+            android:title="Adatbázis törlése" />
+    </group>
+
+</menu>
